@@ -1,0 +1,7 @@
+{
+  "name": "neuro-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
