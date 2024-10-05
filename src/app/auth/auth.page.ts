@@ -14,7 +14,7 @@ export class AuthPage implements OnInit {
   }
 
   signIn() {
-    this._router.navigate(['/home']);
+    this._router.navigate(['/tabs']);
   }
 
 }
