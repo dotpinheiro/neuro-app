@@ -9,4 +9,4 @@ RUN npm install
 
 EXPOSE 8100
 
-CMD ["ionic","serve", "--external", "--disableHostCheck", "true"]
+CMD ["ionic","serve", "--external", "--public-host=neuroapp.sa.pinheiro.tech"]
