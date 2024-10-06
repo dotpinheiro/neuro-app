@@ -2,9 +2,7 @@ FROM node:22
 
 COPY . /www/app
 
-RUN npm install -g cordova ionic
-RUN npm install -g bower
-RUN npm install -g gulp
+RUN npm install -g @ionic/cli
 
 WORKDIR /www/app
 RUN npm install
