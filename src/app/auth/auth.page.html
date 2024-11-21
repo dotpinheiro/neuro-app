@@ -1,27 +1,19 @@
 <ion-content [fullscreen]="true">
+  <img src="assets/img/login-bg.png" alt="logo" class="login-bg">
   <div class="info-container">
-    <img src="assets/img/logo.png" alt="logo" style="width: 160px; margin: 0 auto; display: block;">
     <div class="app-description">
-      Bem-vindo ao <strong>NeuroApp</strong>, o aplicativo de suporte dedicado a melhorar a vida de pessoas com <strong>doenças degenerativas</strong>.
+      <div class="welcome">Bem-vindo ao</div>
+      <div class="app-name">NeuroApp</div>
+      <div class="app-details">O seu assistente de doenças neurodegenerativas</div>
+    </div>
+    <div class="actions-container">
+      <div class="button fb" (click)="signIn()"><ion-icon name="logo-facebook"></ion-icon>Entrar com Facebook</div>
+      <div class="button google" (click)="signIn()"><ion-icon name="logo-google"></ion-icon>Entrar com Google</div>
+      <div class="button apple" (click)="signIn()"><ion-icon name="logo-apple"></ion-icon>Entrar com Apple ID</div>
     </div>
   </div>
-  <ion-card>
-    <ion-card-content>
-      <ion-button expand="block" color="primary" style="margin-top: 10px;" (click)="signIn()">
-        <ion-icon slot="start" name="logo-facebook"></ion-icon>
-        Entrar com Facebook
-      </ion-button>
-
-      <ion-button expand="block" color="light" style="margin-top: 10px;" (click)="signIn()">
-        <ion-icon slot="start" name="logo-google"></ion-icon>
-        Entrar com Google
-      </ion-button>
-
-      <ion-button expand="block" color="dark" style="margin-top: 10px;" (click)="signIn()">
-        <ion-icon slot="start" name="logo-apple"></ion-icon>
-        Entrar com Apple ID
-      </ion-button>
-
-    </ion-card-content>
-  </ion-card>
+  <div class="credits">
+    <div>Desenvolvido com carinho por: UTFPR</div>
+    <div>Versão: 0.0.1</div>
+  </div>
 </ion-content>
