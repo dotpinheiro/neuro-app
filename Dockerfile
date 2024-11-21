@@ -1,12 +1,21 @@
-FROM node:22
+FROM node:22 as build
 
-COPY . /www/app
+WORKDIR /app
 
-RUN npm install -g @ionic/cli
+COPY package*.json ./
 
-WORKDIR /www/app
 RUN npm install
 
-EXPOSE 8100
+COPY . .
 
-CMD ["ionic","serve", "--external", "--public-host=neuroapp.sa.pinheiro.tech"]
+RUN npm run build --prod
+
+FROM nginx:alpine
+
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY --from=build /app/www /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
