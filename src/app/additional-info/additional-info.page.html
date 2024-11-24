@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true">
+  <div class="info-container">
+    <div class="disclaimer">
+      Para melhorar sua experiência <br />
+      precisamos de alguns dados
+    </div>
+
+    <div class="form">
+      <div class="form-input-full">
+        <ion-input
+          aria-label="Nome Completo"
+          placeholder="Nome Completo"
+          class="form-input"
+        ></ion-input>
+      </div>
+
+      <div class="form-input-half">
+        <ion-input
+          aria-label="Idade"
+          placeholder="Idade"
+          type="number"
+          class="form-input"
+        ></ion-input>
+        <ion-input
+          aria-label="Sexo"
+          placeholder="Sexo"
+          class="form-input"
+        ></ion-input>
+      </div>
+
+      <div class="form-input-half">
+        <ion-input
+          aria-label="Altura (cm)"
+          placeholder="Altura (cm)"
+          type="number"
+          class="form-input"
+        ></ion-input>
+        <ion-input
+          aria-label="Peso (kg)"
+          placeholder="Peso (kg)"
+          class="form-input"
+        ></ion-input>
+      </div>
+
+      <div class="disclaimer">
+        <p>Quando voce comecou a tomar medicacoes?</p>
+      </div>
+
+      <div class="form-input-full">
+        <ion-input
+          aria-label="Selecionar data"
+          placeholder="Selecionar data"
+          class="form-input"
+        ></ion-input>
+      </div>
+    </div>
+
+    <div class="image-container">
+      <img src="assets/img/brain.svg" alt="Ilustração" />
+    </div>
+
+    <div class="button-container">
+      <ion-button expand="block" color="success" class="finalizar-button">
+        Finalizar Cadastro
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
