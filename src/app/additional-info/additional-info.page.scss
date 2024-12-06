@@ -1,56 +1,95 @@
 ion-content {
-  --background: #edf6f9;
-
   .info-container {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 24px;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f0f8fc;
+    height: 100%;
+  }
 
-    .disclaimer {
-      font-size: 20px;
-      font-weight: bold;
-      text-transform: uppercase;
-      color: #000;
-      margin-bottom: 24px;
-      text-align: center;
-    }
+  .disclaimer {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000;
+  }
 
-    .form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+  .form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
 
-      .form-input {
-        width: 100%;
-        margin-bottom: 16px;
-      }
+  .form-input-full,
+  .form-input-half {
+    display: flex;
+    gap: 50px;
+  }
 
-      .form-input-full {
-        width: 100%;
-        margin-bottom: 16px;
-      }
+  .form-input-full {
+    flex-direction: column;
+  }
 
-      .form-input-half {
-        display: flex;
-        gap: 16px;
-        width: 100%;
+  .form-input-half {
+    justify-content: space-between;
+  }
 
-        .form-input {
-          flex: 1;
-        }
-      }
+  ion-input {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --border-radius: 5px;
+    --border: 1px solid #ccc;
+    --background: #fff;
+    font-size: 1rem;
+    color: #333;
+  }
 
-      .form-input {
-        background: #fff;
-        border-radius: 8px;
-        padding: 12px;
-        color: #000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        font-size: 16px;
-      }
-    }
+  ion-input::placeholder {
+    color: #aaa;
+  }
+
+  ion-select {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --border-radius: 5px;
+    --border: 1px solid #ccc;
+    --background: #fff;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  ion-select::part(placeholder) {
+    color: #aaa;
+  }
+
+  .image-container {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .image-container img {
+    width: 300px;
+    height: auto;
+  }
+
+  .button-container {
+    width: 100%;
+  }
+
+  .submit-button {
+    --background: #4caf50;
+    --border-radius: 8px;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .finalizar-button:hover {
+    --background: #45a049;
   }
 }
