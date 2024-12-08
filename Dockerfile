@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN yarn
 
 COPY . .
 
-RUN npm run build --prod
+RUN yarn build
 
 FROM nginx:alpine
 
@@ -16,6 +16,6 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=build /app/www /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
