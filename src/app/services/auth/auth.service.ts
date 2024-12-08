@@ -17,7 +17,7 @@ export class AuthService {
     const res = await this._supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:8100/tabs'
+        redirectTo: '/tabs'
       }
     });
     return res;
