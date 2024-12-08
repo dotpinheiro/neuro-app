@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-tabs',
@@ -8,14 +8,14 @@ import { Router } from '@angular/router';
 })
 export class TabsPage implements OnInit {
 
-  constructor(private _router: Router) {}
+  constructor(private _authService: AuthService) {}
 
   ngOnInit(): void {
-      
+      console.log('TabsPage');
   }
 
   signOut() {
-    this._router.navigate(['/auth']);
+    this._authService.signOut();
   }
 
 }
