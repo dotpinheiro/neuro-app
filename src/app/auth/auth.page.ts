@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
   styleUrls: ['./auth.page.scss'],
 })
-export class AuthPage implements OnInit {
+export class AuthPage {
 
-  constructor(private _router: Router) { }
+  constructor(private _authService: AuthService) { }
 
-  ngOnInit() {
+  async signIn() {
+    await this._authService.signInWithGoogle();
   }
 
-  signIn() {
-    this._router.navigate(['/tabs']);
+  async signOut() {
+    await this._authService.signOut();
   }
 
 }
