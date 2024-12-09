@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
-import { SupabaseClient } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-auth',
@@ -12,8 +10,18 @@ export class AuthPage {
 
   constructor(private _authService: AuthService) { }
 
-  async signIn() {
-    await this._authService.signInWithGoogle();
+  async signIn(method:string) {
+    switch (method) {
+      case 'google': {
+        return this._authService.signInWithGoogle();
+      }
+      case 'facebook': {
+        return this._authService.signInWithFacebook();
+      }
+      default: {
+        return;
+      }
+    }
   }
 
   async signOut() {

@@ -14,18 +14,26 @@ export class AuthService {
   ) { }
 
   async signInWithGoogle() {
-    const res = await this._supabase.auth.signInWithOAuth({
+    return this._supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: window.location.origin
       }
     });
-    return res;
+  }
+
+  async signInWithFacebook() {
+    return this._supabase.auth.signInWithOAuth({
+      provider: 'facebook',
+      options: {
+        redirectTo: window.location.origin
+      }
+    });
   }
 
   async signOut() {
     await this._supabase.auth.signOut();
-    this._router.navigate(['/auth']);
+    await this._router.navigate(['/auth']);
   }
 
 }
