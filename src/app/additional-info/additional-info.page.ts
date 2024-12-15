@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { UserService } from '../services/user/user.service';
 @Component({
   selector: 'app-additional-info',
   templateUrl: './additional-info.page.html',
@@ -14,16 +14,31 @@ export class AdditionalInfoPage implements OnInit {
   weight: number | null = null;
   medicationStartDate: string = '';
 
-  constructor(private _router: Router) {}
+  userId: string = '123';
+
+  constructor(private _router: Router, private userService: UserService) {}
 
   ngOnInit() {}
 
-  submit() {
-    console.log('Full Name:', this.fullName);
-    console.log('Age:', this.age);
-    console.log('Gender:', this.gender);
-    console.log('Height (cm):', this.height);
-    console.log('Weight (kg):', this.weight);
-    console.log('Medication Start Date:', this.medicationStartDate);
+  async submit() {
+    const userData = {
+      full_name: this.fullName,
+      age: this.age,
+      gender: this.gender,
+      height: this.height,
+      weight: this.weight,
+      medication_start_date: this.medicationStartDate,
+    };
+
+    try {
+      const updatedUser = await this.userService.updateUser(
+        this.userId,
+        userData
+      );
+      console.log('User updated:', updatedUser);
+      this._router.navigate(['/home']);
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
   }
 }
