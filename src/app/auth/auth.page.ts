@@ -1,20 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
   styleUrls: ['./auth.page.scss'],
 })
-export class AuthPage implements OnInit {
+export class AuthPage {
 
-  constructor(private _router: Router) { }
+  constructor(private _authService: AuthService) { }
 
-  ngOnInit() {
+  async signIn(method:string) {
+    switch (method) {
+      case 'google': {
+        return this._authService.signInWithGoogle();
+      }
+      case 'facebook': {
+        return this._authService.signInWithFacebook();
+      }
+      default: {
+        return;
+      }
+    }
   }
 
-  signIn() {
-    this._router.navigate(['/tabs']);
+  async signOut() {
+    await this._authService.signOut();
   }
 
 }
