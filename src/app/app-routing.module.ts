@@ -40,6 +40,10 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'additional-info',
+    loadChildren: () => import('./additional-info/additional-info.module').then( m => m.AdditionalInfoPageModule)
+  },
 ];
 
 @NgModule({

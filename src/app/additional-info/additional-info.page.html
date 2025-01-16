@@ -1,0 +1,87 @@
+<ion-content [fullscreen]="true">
+  <div class="info-container">
+    <div class="disclaimer">
+      Para melhorar sua experiência <br />
+      precisamos de alguns dados
+    </div>
+
+    <div class="form">
+      <div class="form-input-full">
+        <ion-input
+          aria-label="Nome Completo"
+          placeholder="Nome Completo"
+          class="form-input"
+          [(ngModel)]="fullName"
+        ></ion-input>
+      </div>
+
+      <div class="form-input-half">
+        <ion-input
+          aria-label="Idade"
+          placeholder="Idade"
+          type="number"
+          class="form-input"
+          [(ngModel)]="age"
+        ></ion-input>
+        <ion-select
+          aria-label="Sexo"
+          placeholder="Sexo"
+          [(ngModel)]="gender"
+          class="form-input"
+          interface="popover"
+          justify="space-between"
+        >
+          <ion-select-option value="m">Masculino</ion-select-option>
+          <ion-select-option value="f">Feminino</ion-select-option>
+          <ion-select-option value="other">Outro</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-input-half">
+        <ion-input
+          aria-label="Altura (cm)"
+          placeholder="Altura (cm)"
+          type="number"
+          class="form-input"
+          [(ngModel)]="height"
+        ></ion-input>
+        <ion-input
+          aria-label="Peso (kg)"
+          placeholder="Peso (kg)"
+          class="form-input"
+          [(ngModel)]="weight"
+        ></ion-input>
+      </div>
+
+      <div class="disclaimer">
+        <p>Quando você começou a tomar medicações?</p>
+      </div>
+
+      <div class="form-input-full">
+
+        <ion-datetime-button class="form-input" datetime="datetime"></ion-datetime-button>
+
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" [(ngModel)]="medicationStartDate"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+    </div>
+
+    <div class="image-container">
+      <img src="assets/img/brain.svg" alt="Ilustração" />
+    </div>
+
+    <div class="button-container">
+      <ion-button
+        expand="block"
+        color="success"
+        class="submit-button"
+        (click)="submit()"
+      >
+        Finalizar Cadastro
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
