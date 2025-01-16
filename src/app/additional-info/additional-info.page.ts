@@ -12,7 +12,7 @@ export class AdditionalInfoPage implements OnInit {
   gender: string = '';
   height: number | null = null;
   weight: number | null = null;
-  medicationStartDate: string = '';
+  medicationStartDate: string | null = new Date().toISOString();
 
   constructor(private _router: Router, private userService: UserService) {}
 

@@ -54,16 +54,18 @@
       </div>
 
       <div class="disclaimer">
-        <p>Quando voce comecou a tomar medicacoes?</p>
+        <p>Quando você começou a tomar medicações?</p>
       </div>
 
       <div class="form-input-full">
-        <ion-input
-          aria-label="Selecionar data"
-          placeholder="Selecionar data"
-          class="form-input"
-          [(ngModel)]="medicationStartDate"
-        ></ion-input>
+
+        <ion-datetime-button class="form-input" datetime="datetime"></ion-datetime-button>
+
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" [(ngModel)]="medicationStartDate"></ion-datetime>
+          </ng-template>
+        </ion-modal>
       </div>
     </div>
 
