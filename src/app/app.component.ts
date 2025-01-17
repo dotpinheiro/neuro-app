@@ -15,11 +15,10 @@ export class AppComponent {
     this._supabaseClient.auth.onAuthStateChange((event, session) => {
       console.log('event', event);
       console.log('session', session);
-      if(event === 'SIGNED_IN') {
-        console.log('User signed in');
-        this._router.navigate(['/tabs']);
-      }
+      // if(event === 'SIGNED_IN') {
+      //   console.log('User signed in');
+      //   this._router.navigate(['/tabs']);
+      // }
     });
   }
-
 }

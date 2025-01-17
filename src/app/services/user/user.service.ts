@@ -20,43 +20,60 @@ export class UserService {
         throw supabaseUserError;
       }
 
-      const { data: user, error: userError } = await this._supabase
-        .from('users')
-        .select()
-        .eq('email', supabaseUser?.email)
-        .single();
+      const { data: user_profile, error: userProfileError } =
+        await this._supabase
+          .from('user_profiles')
+          .select()
+          .eq('user_id', supabaseUser?.id)
+          .eq('scope', 'user')
+          .maybeSingle();
 
-      if (userError) {
-        console.error('Error fetching user from supabase:', userError);
-        throw userError;
+      if (userProfileError) {
+        throw userProfileError;
       }
 
-      if (!user) {
-        throw new Error('User not found with email: ' + supabaseUser?.email);
+      if (!user_profile) {
+        const { data: profile, error: profileError } = await this._supabase
+          .from('profiles')
+          .insert({
+            ...userData,
+          })
+          .select()
+          .single();
+
+        if (profileError) {
+          throw profileError;
+        }
+
+        const { error: user_profileError } = await this._supabase
+          .from('user_profiles')
+          .insert({
+            user_id: supabaseUser?.id,
+            profile_id: profile.id,
+            scope: 'user',
+          })
+          .select();
+
+        if (user_profileError) {
+          throw user_profileError;
+        }
+
+        return profile;
+      } else {
+        const { data: profile, error: profileError } = await this._supabase
+          .from('profiles')
+          .update({
+            ...userData,
+          })
+          .eq('id', user_profile.profile_id)
+          .select();
+
+        if (profileError) {
+          throw profileError;
+        }
+
+        return profile;
       }
-
-      const { data, error } = await this._supabase
-        .from('profiles')
-        .upsert({
-          id: user.id,
-          ...userData,
-        })
-        .select()
-        .single();
-
-      if (error) {
-        throw error;
-      }
-
-      const { error: updateError } = await this._supabase
-        .from('user_profiles')
-        .upsert({ user_id: user.id, profile_id: data.id, scope: 'user' });
-
-      if (updateError) {
-        throw updateError;
-      }
-
-      return data;
     } catch (error) {
       console.error('Error updating user:', error);
       throw error;
