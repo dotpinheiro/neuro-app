@@ -30,8 +30,8 @@ const routes: Routes = [
         loadChildren: () => import('./medications/medications.module').then( m => m.MedicationsPageModule)
       },
       {
-        path: 'history',
-        loadChildren: () => import('./history/history.module').then( m => m.HistoryPageModule)
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
       },
       {
         path: '',
@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'additional-info',
     loadChildren: () => import('./additional-info/additional-info.module').then( m => m.AdditionalInfoPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   },
 ];
 

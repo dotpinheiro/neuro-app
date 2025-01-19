@@ -1,14 +1,8 @@
 <ion-content [fullscreen]="true">
-  <form [formGroup]="form" class="info-container" (ngSubmit)="submit()">
-    <div class="disclaimer">
-      Para melhorar sua experiência <br />
-      precisamos de alguns dados
-    </div>
-
+  <form [formGroup]="form" class="info-container">
     <div class="form">
       <div class="form-input-full">
         <ion-input
-          [disabled]="isLoading"
           aria-label="Nome Completo"
           placeholder="Nome Completo"
           class="form-input"
@@ -18,7 +12,6 @@
 
       <div class="form-input-half">
         <ion-input
-          [disabled]="isLoading"
           aria-label="Idade"
           placeholder="Idade"
           type="number"
@@ -26,7 +19,6 @@
           formControlName="age"
         ></ion-input>
         <ion-select
-          [disabled]="isLoading"
           aria-label="Sexo"
           placeholder="Sexo"
           formControlName="sex"
@@ -42,7 +34,6 @@
 
       <div class="form-input-half">
         <ion-input
-          [disabled]="isLoading"
           aria-label="Altura (cm)"
           placeholder="Altura (cm)"
           type="number"
@@ -50,7 +41,6 @@
           formControlName="height"
         ></ion-input>
         <ion-input
-          [disabled]="isLoading"
           aria-label="Peso (kg)"
           placeholder="Peso (kg)"
           class="form-input"
@@ -76,19 +66,6 @@
 
     <div class="image-container">
       <img src="assets/img/brain.svg" alt="Ilustração" />
-    </div>
-
-    <div class="button-container">
-      <ion-button
-        expand="block"
-        color="success"
-        class="submit-button"
-        type="submit"
-        [disabled]="form.invalid"
-      >
-        <ion-spinner *ngIf="isLoading"></ion-spinner>
-        Finalizar Cadastro
-      </ion-button>
     </div>
   </form>
 </ion-content>
