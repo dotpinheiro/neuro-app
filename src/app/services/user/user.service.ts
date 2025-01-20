@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {SupabaseClient, User} from '@supabase/supabase-js';
+import { SupabaseClient, User } from '@supabase/supabase-js';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class UserService {
     if (error) {
       throw error;
     }
-    console.log(data)
+    console.log(data);
     return data.user as User;
   }
 }

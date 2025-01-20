@@ -37,7 +37,6 @@ export class ProfilePage implements OnInit {
       await this._profileService.getProfiles(currentUser.id)
     )[0];
     const { profile } = userProfile;
-    console.log(profile);
     this.form.patchValue({
       name: profile.name,
       age: profile.age,
@@ -50,7 +49,6 @@ export class ProfilePage implements OnInit {
   }
 
   async submit() {
-    console.log('ola ola');
     if (!this.form.valid) {
       return;
     }
