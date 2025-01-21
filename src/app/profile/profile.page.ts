@@ -21,6 +21,7 @@ export class ProfilePage implements OnInit {
     private _fb: FormBuilder
   ) {
     this.form = this._fb.group({
+      id: [null, Validators.required],
       name: [null, Validators.required],
       age: [null, [Validators.required, Validators.min(0)]],
       sex: [null, Validators.required],
@@ -38,6 +39,7 @@ export class ProfilePage implements OnInit {
     )[0];
     const { profile } = userProfile;
     this.form.patchValue({
+      id: userProfile.profile_id,
       name: profile.name,
       age: profile.age,
       sex: profile.sex,
@@ -55,10 +57,10 @@ export class ProfilePage implements OnInit {
     try {
       this.isLoading = true;
       const userData: ProfileInterface = this.form.value as ProfileInterface;
-      await this._profileService.createProfile(userData);
+      await this._profileService.updateProfile(userData);
       await this._router.navigate(['/tabs/home']);
     } catch (e: any) {
-      console.error('Error creating profile:', e);
+      console.error('Error updating profile:', e);
     } finally {
       this.isLoading = false;
     }
