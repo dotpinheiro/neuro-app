@@ -1,30 +1,33 @@
-import {Injectable} from '@angular/core';
-import {SupabaseClient} from "@supabase/supabase-js";
-import {ProfileInterface, ProfileScopes} from "./profile.interface";
-import {UserService} from "../user/user.service";
+import { Injectable } from '@angular/core';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { UserService } from '../user/user.service';
+import { ProfileInterface, ProfileScopes } from './profile.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileService {
-
-  constructor(private _supabase: SupabaseClient, private _userService: UserService) { }
+  constructor(
+    private _supabase: SupabaseClient,
+    private _userService: UserService
+  ) {}
 
   async getProfiles(userId: string): Promise<ProfileInterface[]> {
     const { data, error } = await this._supabase
       .from('user_profiles')
-      .select(`
+      .select(
+        `
         id,
         user_id,
         profile_id,
         scope,
         profile: profile_id (name, age, sex, height, weight, medication_started_at, img)
-      `)
+      `
+      )
       .eq('user_id', userId)
-      .eq('scope', 'user')
+      .eq('scope', 'user');
 
-
-    if(error){
+    if (error) {
       throw error;
     }
 
@@ -47,7 +50,10 @@ export class ProfileService {
     return profile;
   }
 
-  async createProfile(profileData: ProfileInterface, scope: ProfileScopes = ProfileScopes.USER) {
+  async createProfile(
+    profileData: ProfileInterface,
+    scope: ProfileScopes = ProfileScopes.USER
+  ) {
     const currentUser = await this._userService.getCurrentUser();
     const { data: profileResponse, error: profileError } = await this._supabase
       .from('profiles')

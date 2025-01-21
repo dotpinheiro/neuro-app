@@ -1,6 +1,12 @@
 <ion-content [fullscreen]="true">
   <form [formGroup]="form" class="info-container">
     <div class="form">
+      <div class="image-wrapper">
+        <ion-avatar class="user-image-avatar">
+          <img [src]="form.get('img')!.value" alt="Foto do perfil" />
+        </ion-avatar>
+      </div>
+
       <div class="form-input-full">
         <ion-input
           aria-label="Nome Completo"
@@ -53,19 +59,34 @@
       </div>
 
       <div class="form-input-full">
-
-        <ion-datetime-button class="form-input" datetime="datetime"></ion-datetime-button>
+        <ion-datetime-button
+          class="form-input"
+          datetime="datetime"
+        ></ion-datetime-button>
 
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
-            <ion-datetime id="datetime" formControlName="medication_started_at"></ion-datetime>
+            <ion-datetime
+              id="datetime"
+              formControlName="medication_started_at"
+            ></ion-datetime>
           </ng-template>
         </ion-modal>
       </div>
     </div>
 
-    <div class="image-container">
-      <img src="assets/img/brain.svg" alt="Ilustração" />
+    <div class="button-container">
+      <ion-button
+        expand="block"
+        color="success"
+        class="submit-button"
+        type="submit"
+        [disabled]="form.invalid"
+        (click)="submit()"
+      >
+        <ion-spinner *ngIf="isLoading"></ion-spinner>
+        ATUALIZAR DADOS
+      </ion-button>
     </div>
   </form>
 </ion-content>

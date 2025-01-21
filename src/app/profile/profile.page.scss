@@ -9,12 +9,26 @@ ion-content {
     height: 100%;
   }
 
-  .disclaimer {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-align: center;
+  .image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     margin-bottom: 20px;
-    color: #000;
+  }
+
+  .user-image-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .user-image-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .form {
@@ -66,17 +80,16 @@ ion-content {
     color: #aaa;
   }
 
-  .image-container {
-    margin: 20px 0;
+  .disclaimer {
+    font-size: 1.2rem;
+    font-weight: bold;
     text-align: center;
-  }
-
-  .image-container img {
-    width: 200px;
-    height: auto;
+    margin-bottom: 20px;
+    color: #000;
   }
 
   .button-container {
+    margin-top: 70px;
     width: 100%;
   }
 
@@ -89,7 +102,7 @@ ion-content {
     font-weight: bold;
   }
 
-  .finalizar-button:hover {
+  .submit-button:hover {
     --background: #45a049;
   }
 }
