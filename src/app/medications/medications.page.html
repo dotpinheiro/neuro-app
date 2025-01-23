@@ -2,16 +2,25 @@
   <ion-tabs>
     <ion-header collapse="condense">
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="time">
-          <ion-icon name="time-outline"></ion-icon>
-          Horários de medicamentos
-        </ion-tab-button>
         <ion-tab-button tab="stock">
           <ion-icon name="medkit-outline"></ion-icon>
           Estoque de medicamentos
         </ion-tab-button>
+        <ion-tab-button tab="time">
+          <ion-icon name="time-outline"></ion-icon>
+          Horários de medicamentos
+        </ion-tab-button>
       </ion-tab-bar>
     </ion-header>
+
+    <ion-tab tab="stock">
+      <ion-list>
+        <ion-item *ngFor="let medicine of meds">
+          <ion-label>{{medicine.name}}</ion-label>
+          <ion-label slot="end">{{medicine.quantity}} dias restantes</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-tab>
 
     <ion-tab tab="time">
       <ion-list>
@@ -25,15 +34,6 @@
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-    </ion-tab>
-
-    <ion-tab tab="stock">
-      <ion-list>
-        <ion-item *ngFor="let medicine of meds">
-          <ion-label>{{medicine.name}}</ion-label>
-          <ion-label slot="end">{{medicine.quantity}} dias restantes</ion-label>
-        </ion-item>
-      </ion-list>
     </ion-tab>
   </ion-tabs>
 </ion-content>
