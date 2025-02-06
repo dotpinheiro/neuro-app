@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileInterface } from '../services/profile/profile.interface';
 import { ProfileService } from '../services/profile/profile.service';
+import { ToastService } from '../services/toast/toast.service';
 import { UserService } from '../services/user/user.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class ProfilePage implements OnInit {
     private _router: Router,
     private _profileService: ProfileService,
     private _userService: UserService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _toastService: ToastService
   ) {
     this.form = this._fb.group({
       id: [null, Validators.required],
@@ -58,6 +60,11 @@ export class ProfilePage implements OnInit {
       this.isLoading = true;
       const userData: ProfileInterface = this.form.value as ProfileInterface;
       await this._profileService.updateProfile(userData);
+      this._toastService.presentToast(
+        'Atualizado com sucesso',
+        undefined,
+        'top'
+      );
       await this._router.navigate(['/tabs/home']);
     } catch (e: any) {
       console.error('Error updating profile:', e);
