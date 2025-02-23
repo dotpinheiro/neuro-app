@@ -9,29 +9,41 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="form">
-    <ion-item>
-      <ion-label position="floating">Nome</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label position="floating">Nome*</ion-label>
+        <ion-input
+          type="text"
+          formControlName="name"
+          errorText="{{form.controls['name'].invalid ? 'Este campo é obrigatório' : false}}"
+        >
 
-    <ion-item>
-      <ion-label>Medicações</ion-label>
-      <ion-select multiple="true" formControlName="medications">
-        <ion-select-option *ngFor="let med of medService.medications; index as i" value="{{med.id}}">{{med.medication_name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+        </ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="fixed">Dias da Semana</ion-label>
-      <ion-select multiple="true" formControlName="week_days">
-        <ion-select-option *ngFor="let day of weekDays" value="{{day.value}}">{{day.name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Medicações*</ion-label>
+        <ion-select multiple="true" formControlName="medications">
+          <ion-select-option *ngFor="let med of medService.medications; index as i" value="{{med.id}}">{{med.medication_name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="fixed">Horário</ion-label>
-      <ion-input type="time" formControlName="time"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="fixed">Dias da Semana*</ion-label>
+        <ion-select multiple="true" formControlName="week_days">
+          <ion-select-option *ngFor="let day of weekDays" value="{{day.value}}">{{day.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="fixed">Horário*</ion-label>
+        <ion-input
+          type="time"
+          formControlName="time"
+          errorText="{{form.controls['time'].invalid ? 'Este campo é obrigatório' : false}}"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
 
     <ion-button expand="block" (click)="submit()">{{timerId ? 'Atualizar' : 'Adicionar'}} Horário</ion-button>
   </form>

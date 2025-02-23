@@ -18,7 +18,7 @@ export class TimerService {
     const currentProfile = await this._profileService.getCurrentProfile();
 
     const { data, error } = await this._supabase.from('profile_schedule').select('*')
-      .eq('profile_id', currentProfile)
+      .eq('profile_id', currentProfile.id)
       .is('deleted_at', null).order('created_at', { ascending: true });
     if(error) {
       throw error;
@@ -28,7 +28,9 @@ export class TimerService {
   }
 
   async getTimerById(timerId: string) {
+    const currentProfile = await this._profileService.getCurrentProfile();
     const { data, error } = await this._supabase.from('profile_schedule').select('*')
+      .eq('profile_id', currentProfile.id)
       .is('deleted_at', null).eq('id', timerId).maybeSingle();
     if(error) {
       throw error;
@@ -55,7 +57,9 @@ export class TimerService {
   }
 
   async insertSchedule(timer: any) {
+    const currentProfile = await this._profileService.getCurrentProfile();
     return this._supabase.from('profile_schedule').insert({
+      profile_id: currentProfile.id,
       name: timer.name,
       time: timer.time,
       week_days: timer.week_days
@@ -70,7 +74,9 @@ export class TimerService {
   }
 
   async updateSchedule(timerId: string, timer: any) {
+    const currentProfile = await this._profileService.getCurrentProfile();
     const { data, error } = await this._supabase.from('profile_schedule').update({
+      profile_id: currentProfile.id,
       name: timer.name,
       time: timer.time,
       week_days: timer.week_days
@@ -100,9 +106,12 @@ export class TimerService {
   }
 
   async deleteTimer(timerId: string) {
+    const currentProfile = await this._profileService.getCurrentProfile();
     const { data, error } = await this._supabase.from('profile_schedule').update({
       deleted_at: new Date()
-    }).eq('id', timerId).select();
+    })
+      .eq('profile_id', currentProfile.id)
+      .eq('id', timerId).select();
     if(error) {
       throw error;
     }

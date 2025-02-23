@@ -63,7 +63,7 @@ export class AddTimerComponent  implements OnInit {
 
   async submit(){
     if(!this.form.valid) {
-      return
+      return this.presentInvalidFormError();
     }
     try{
       await this.presentLoading();
@@ -86,8 +86,6 @@ export class AddTimerComponent  implements OnInit {
 
   async formatData(){
     const selectedDays = this.form.value.week_days;
-    console.log(selectedDays);
-    console.log(this.weekDays)
     this.weekDays = this.weekDays.map(day => {
       day.active = selectedDays.includes(day.id.toString());
       return day;
@@ -117,6 +115,15 @@ export class AddTimerComponent  implements OnInit {
       ]
     });
 
+    await alert.present();
+  }
+
+  async presentInvalidFormError() {
+    const alert = await this.alertCtrl.create({
+      header: 'Erro',
+      message: 'Preencha todos os campos obrigatórios marcados com (*)',
+      buttons: ['OK']
+    });
     await alert.present();
   }
 

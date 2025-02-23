@@ -9,21 +9,34 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="form" (ngSubmit)="submit()">
-    <ion-item>
-      <ion-label position="floating">Nome</ion-label>
-      <ion-input formControlName="medication_name" type="text"></ion-input>
-    </ion-item>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label position="floating">Nome*</ion-label>
+        <ion-input
+          formControlName="medication_name"
+          type="text"
+          errorText="{{form.controls['medication_name'].invalid ? 'Este campo é obrigatório' : false}}">
+        </ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Fabricante</ion-label>
-      <ion-input formControlName="medication_manufacturer" type="text"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fabricante*</ion-label>
+        <ion-input
+          formControlName="medication_manufacturer"
+          type="text"
+          errorText="{{form.controls['medication_manufacturer'].invalid ? 'Este campo é obrigatório' : false}}">
+        </ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Descrição</ion-label>
-      <ion-input formControlName="medication_description" type="text"></ion-input>
-    </ion-item>
-
+      <ion-item>
+        <ion-label position="floating">Descrição</ion-label>
+        <ion-input
+          formControlName="medication_description"
+          type="text"
+          errorText="{{form.controls['medication_description'].invalid ? 'Este campo é obrigatório' : false}}">
+        </ion-input>
+      </ion-item>
+    </ion-list>
     <ion-button expand="block" type="submit">{{medicationId ? 'Atualizar' : 'Adicionar' }} Medicamento</ion-button>
   </form>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {LoadingController, ModalController, NavParams} from "@ionic/angular";
+import {AlertController, LoadingController, ModalController, NavParams} from "@ionic/angular";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MedicationService} from "../../services/profile/medication/medication.service";
 
@@ -17,12 +17,13 @@ export class AddComponent implements OnInit {
     private modalController: ModalController,
     private medService: MedicationService,
     private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     private navParams: NavParams,
     private fb: FormBuilder) {
     this.form = this.fb.group({
       medication_name: [null, Validators.required],
       medication_manufacturer: [null, Validators.required],
-      medication_description: [null, Validators.required],
+      medication_description: [null],
     });
   }
 
@@ -36,7 +37,7 @@ export class AddComponent implements OnInit {
 
   async submit() {
     if(!this.form.valid) {
-      return
+      return this.presentFormError();
     }
     try{
       await this.presentLoading();
@@ -60,6 +61,15 @@ export class AddComponent implements OnInit {
       spinner: 'bubbles'
     });
     await this.loading.present();
+  }
+
+  async presentFormError() {
+    const alert = await this.alertCtrl.create({
+      header: 'Erro',
+      message: 'Preencha todos os campos obrigatórios marcados com (*)',
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   async closeModal() {
