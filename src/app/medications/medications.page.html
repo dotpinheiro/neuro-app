@@ -1,13 +1,58 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>medications</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">medications</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-tabs>
+    <ion-header>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="stock">
+          <ion-icon name="medkit-outline"></ion-icon>
+          Estoque de medicamentos
+        </ion-tab-button>
+        <ion-tab-button tab="time">
+          <ion-icon name="time-outline"></ion-icon>
+          Horários de medicamentos
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-header>
+
+    <ion-tab tab="stock">
+      <div>
+        <div class="actions-container">
+          <ion-button (click)="addMed()">Adicionar medicamento</ion-button>
+        </div>
+        <ion-list>
+          <ion-item-sliding *ngFor="let med of medService.medications">
+            <ion-item (click)="editMed(med.id)">
+              <ion-label>{{med.medication_name}}</ion-label>
+            </ion-item>
+            <ion-item-options slot="end">
+              <ion-item-option color="danger" expandable="true" (click)="deleteMedication(med.id.toString())">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </div>
+    </ion-tab>
+
+    <ion-tab tab="time">
+      <div>
+        <div class="actions-container">
+          <ion-button (click)="addTimer()">Adicionar horário</ion-button>
+        </div>
+        <ion-list>
+          <ion-item-sliding *ngFor="let time of timerService.timers">
+            <ion-item>
+              <ion-label (click)="editTimer(time.id)">{{time.name}}</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="time.status" (ionChange)="timerService.toggleStatus(time)"></ion-toggle>
+            </ion-item>
+            <ion-item-options slot="end">
+              <ion-item-option color="danger" expandable="true" (click)="deleteTimer(time.id.toString())">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+        <div *ngIf="!timerService.timers">Você ainda não possui horários definidos</div>
+      </div>
+    </ion-tab>
+  </ion-tabs>
 </ion-content>

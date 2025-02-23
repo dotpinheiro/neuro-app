@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs/tabs.page';
+import {SupabaseClient} from "@supabase/supabase-js";
 
 const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: () => {
+      return localStorage.getItem('logged') ? '/tabs/medications' : '/auth';
+    },
     pathMatch: 'full'
   },
   {
@@ -22,8 +25,8 @@ const routes: Routes = [
         loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
       },
       {
-        path: 'home',
-        loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+        path: 'prescriptions',
+        loadChildren: () => import('./prescription/prescription.module').then( m => m.PrescriptionPageModule)
       },
       {
         path: 'medications',
@@ -35,7 +38,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: '/tabs/medications',
         pathMatch: 'full'
       }
     ]
@@ -47,6 +50,10 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'prescription',
+    loadChildren: () => import('./prescription/prescription.module').then( m => m.PrescriptionPageModule)
   },
 ];
 
