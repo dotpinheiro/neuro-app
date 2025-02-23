@@ -26,9 +26,9 @@ export class ToastService {
   ) {
     const toast = await this.toastController.create({
       message: message,
-      duration: duration,
       position: position,
       color: color,
+      duration: duration,
       cssClass: 'custom-toast',
     });
 
