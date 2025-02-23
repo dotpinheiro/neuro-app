@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs/tabs.page';
+import {SupabaseClient} from "@supabase/supabase-js";
 
 const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: () => {
+      return localStorage.getItem('logged') ? '/tabs/medications' : '/auth';
+    },
     pathMatch: 'full'
   },
   {

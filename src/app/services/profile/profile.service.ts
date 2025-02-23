@@ -12,6 +12,20 @@ export class ProfileService {
     private _userService: UserService
   ) {}
 
+  async getCurrentProfile(): Promise<ProfileInterface> {
+    const currentUser = await this._userService.getCurrentUser();
+    const { data, error } = await this._supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('user_id', currentUser.id)
+
+    if (error) {
+      throw error;
+    }
+
+    return data![0] as unknown as ProfileInterface;
+  }
+
   async getProfiles(userId: string): Promise<ProfileInterface[]> {
     const { data, error } = await this._supabase
       .from('user_profiles')

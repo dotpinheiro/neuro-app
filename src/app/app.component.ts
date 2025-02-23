@@ -21,14 +21,18 @@ export class AppComponent implements OnInit {
       if(event === 'INITIAL_SESSION' && session !== null) {
         console.log('User signed in');
         const profiles = await this._profileService.getProfiles(session.user.id);
-        console.log(profiles);
+        localStorage.setItem('logged', 'true');
         if(profiles.length > 0) {
-          // if(this._router.url.includes('auth')){
-            await this._router.navigate(['/tabs/home']);
-          // }
+            await this._router.navigate(['/tabs/medications']);
           return;
         }
         await this._router.navigate(['/additional-info']);
+      }
+
+      if(event === 'SIGNED_OUT') {
+        console.log('User signed out');
+        localStorage.removeItem('logged');
+        await this._router.navigate(['/auth']);
       }
     });
   }

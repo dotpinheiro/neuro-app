@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Horário</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+    <ion-item>
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Medicações</ion-label>
+      <ion-select multiple="true" formControlName="medications">
+        <ion-select-option *ngFor="let med of medService.medications; index as i" value="{{med.id}}">{{med.medication_name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed">Dias da Semana</ion-label>
+      <ion-select multiple="true" formControlName="week_days">
+        <ion-select-option *ngFor="let day of weekDays" value="{{day.value}}">{{day.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed">Horário</ion-label>
+      <ion-input type="time" formControlName="time"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" (click)="submit()">{{timerId ? 'Atualizar' : 'Adicionar'}} Horário</ion-button>
+  </form>
+
+</ion-content>
