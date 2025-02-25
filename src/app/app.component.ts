@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SupabaseClient } from '@supabase/supabase-js';
 import {ProfileService} from "./services/profile/profile.service";
+import { requestForToken } from 'src/firebase';
+
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,8 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
+    requestForToken();
+
     this._supabaseClient.auth.onAuthStateChange(async (event, session) => {
       if(event === 'INITIAL_SESSION' && session !== null) {
         console.log('User signed in');
