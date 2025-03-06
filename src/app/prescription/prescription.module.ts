@@ -8,6 +8,8 @@ import { PrescriptionPageRoutingModule } from './prescription-routing.module';
 
 import { PrescriptionPage } from './prescription.page';
 
+import { PrescriptionOccurenceComponent } from './components/prescription-occurence/prescription-occurence.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,6 @@ import { PrescriptionPage } from './prescription.page';
     IonicModule,
     PrescriptionPageRoutingModule
   ],
-  declarations: [PrescriptionPage]
+  declarations: [PrescriptionPage, PrescriptionOccurenceComponent]
 })
 export class PrescriptionPageModule {}
