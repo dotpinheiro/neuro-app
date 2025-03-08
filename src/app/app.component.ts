@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
         const profiles = await this._profileService.getProfiles(session.user.id);
         localStorage.setItem('logged', 'true');
         if(profiles.length > 0) {
-            await this._router.navigate(['/tabs/medications']);
+            //await this._router.navigate(['/tabs/medications']);
           return;
         }
         await this._router.navigate(['/additional-info']);

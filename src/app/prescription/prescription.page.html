@@ -2,7 +2,10 @@
   <div class="title-box">
     <div class="title-content">Minhas Receitas</div>
   </div>
-  <div>
-    <app-prescription-occurence></app-prescription-occurence>
+  <div class="create-prescription-box">
+    <ion-button (click)="addPrescription()">Criar Receita</ion-button>
+  </div>
+  <div class="prescriptions-box">
+    <app-prescription-occurence class="prescription-item"></app-prescription-occurence>
   </div>
 </ion-content>

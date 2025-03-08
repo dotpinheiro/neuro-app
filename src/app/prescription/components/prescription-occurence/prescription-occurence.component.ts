@@ -5,10 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './prescription-occurence.component.html',
   styleUrls: ['./prescription-occurence.component.scss'],
 })
-export class PrescriptionOccurenceComponent  implements OnInit {
+export class PrescriptionOccurenceComponent {
 
   constructor() { }
-
-  ngOnInit() {}
 
 }
