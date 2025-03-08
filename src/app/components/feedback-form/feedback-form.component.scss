@@ -1,0 +1,37 @@
+.mood-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.mood-icon {
+  font-size: 24px;
+  color: gray;
+}
+
+.mood-icon.sad {
+  color: red;
+}
+
+.mood-icon.happy {
+  color: green;
+}
+
+.custom-range {
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-top: -10px;
+  color: gray;
+}
+
+.humor-value {
+  text-align: center;
+  font-weight: bold;
+}
