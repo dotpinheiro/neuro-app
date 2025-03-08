@@ -4,6 +4,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import {ProfileService} from "./services/profile/profile.service";
 import {ModalController} from "@ionic/angular";
 import {FeedbackFormComponent} from "./components/feedback-form/feedback-form.component";
+import { requestForToken } from 'src/firebase';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,8 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     console.log("init")
     await this.openFeedbackForm();
+    requestForToken();
+
     this._supabaseClient.auth.onAuthStateChange(async (event, session) => {
       if(event === 'INITIAL_SESSION' && session !== null) {
         console.log('User signed in');
