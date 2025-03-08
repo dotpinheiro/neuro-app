@@ -10,9 +10,9 @@ import {MedicationService} from "../../services/profile/medication/medication.se
 })
 export class FeedbackFormComponent {
   form: FormGroup;
-  humor: number = 5; // Valor inicial do humor
-  sintomas: string = ''; // Campo para sintomas
-  numbers: number[] = Array.from({ length: 11 }, (_, i) => i); // Escala de 0 a 10
+  humor: number = 5;
+  sintomas: string = '';
+  numbers: number[] = Array.from({ length: 11 }, (_, i) => i);
 
   constructor(
     private modalController: ModalController,
@@ -34,7 +34,6 @@ export class FeedbackFormComponent {
     console.log('Humor:', this.humor);
     console.log('Sintomas:', this.sintomas);
 
-    // Exibir um alerta de confirmação
     const toast = await this.toastController.create({
       message: 'Humor enviado com sucesso!',
       duration: 2000,
@@ -46,9 +45,9 @@ export class FeedbackFormComponent {
   }
 
   getColor(value: number): string {
-    if (value <= 3) return 'danger';   // Vermelho
-    if (value <= 6) return 'warning';  // Amarelo
-    return 'success';                  // Verde
+    if (value <= 3) return 'danger';
+    if (value <= 6) return 'warning';
+    return 'success';
   }
 
   async submit() {
