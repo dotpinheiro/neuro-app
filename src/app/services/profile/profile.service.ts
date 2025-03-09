@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { ProfileResponse } from 'src/app/components/select/select.component';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 import { UserService } from '../user/user.service';
-import { ProfileInterface, ProfileScopes } from './profile.interface';
+import {
+  ProfileInterface,
+  ProfileScopes,
+  UserProfiles,
+} from './profile.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,24 +15,45 @@ import { ProfileInterface, ProfileScopes } from './profile.interface';
 export class ProfileService {
   constructor(
     private _supabase: SupabaseClient,
-    private _userService: UserService
+    private _userService: UserService,
+    private _localStorage: LocalStorageService
   ) {}
 
-  async getCurrentProfile(): Promise<ProfileInterface> {
-    const currentUser = await this._userService.getCurrentUser();
+  async getCurrentProfileInfo(id: number): Promise<ProfileInterface> {
     const { data, error } = await this._supabase
-      .from('user_profiles')
+      .from('profiles')
       .select('*')
-      .eq('user_id', currentUser.id)
+      .eq('id', id);
 
     if (error) {
       throw error;
     }
 
-    return data![0] as unknown as ProfileInterface;
+    return data[0] as unknown as ProfileInterface;
   }
 
-  async getProfiles(userId: string): Promise<ProfileInterface[]> {
+  async getCurrentProfile() {
+    const currentUser = await this._userService.getCurrentUser();
+    const { data, error } = await this._supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('user_id', currentUser.id);
+
+    if (error) {
+      throw error;
+    }
+
+    const profileId = this._localStorage.getItem<number>('profileId');
+    if (profileId) {
+      return data.filter(
+        (item) => item.id === profileId
+      )[0] as unknown as UserProfiles;
+    }
+
+    return data![0] as unknown as UserProfiles;
+  }
+
+  async getProfiles(userId: string): Promise<ProfileResponse[]> {
     const { data, error } = await this._supabase
       .from('user_profiles')
       .select(
@@ -45,7 +72,7 @@ export class ProfileService {
       throw error;
     }
 
-    return data as unknown as ProfileInterface[];
+    return data as unknown as ProfileResponse[];
   }
 
   async updateProfile(profileData: ProfileInterface) {
