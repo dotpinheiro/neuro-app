@@ -1,0 +1,37 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Termômetro de Humor</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-item>
+      <ion-label position="stacked">Como você está se sentindo?</ion-label>
+    </ion-item>
+
+    <div class="mood-container">
+      <ion-icon name="sad-outline" class="mood-icon sad"></ion-icon>
+      <ion-range
+        min="0"
+        max="10"
+        step="1"
+        [(ngModel)]="humor"
+        class="custom-range"
+        color="{{ getColor(humor) }}">
+      </ion-range>
+      <ion-icon name="happy-outline" class="mood-icon happy"></ion-icon>
+    </div>
+
+    <div class="scale">
+      <span *ngFor="let num of numbers">{{ num }}</span>
+    </div>
+
+    <p class="humor-value">Humor: {{ humor }}</p>
+
+    <ion-item>
+      <ion-label position="stacked">Descreva seus sintomas</ion-label>
+      <ion-textarea [(ngModel)]="sintomas" placeholder="Exemplo: Dor de cabeça, tontura..."></ion-textarea>
+    </ion-item>
+
+    <ion-button expand="full" (click)="enviarFeedback()">Enviar humor</ion-button>
+  </ion-card-content>
+</ion-card>
