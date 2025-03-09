@@ -1,0 +1,6 @@
+<div class="profile-selector" (click)="openProfileSelector()">
+  <div class="profile-name">{{ currentProfile }}</div>
+  <ion-avatar *ngIf="profileImageUrl">
+    <img [src]="profileImageUrl" />
+  </ion-avatar>
+</div>
