@@ -1,3 +1,12 @@
 ion-content {
     background-color: red;
+
+    .date-item {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    ion-button {
+        margin-top: 20px;
+    }
 }

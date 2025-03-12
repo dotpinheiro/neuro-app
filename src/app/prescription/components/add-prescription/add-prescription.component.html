@@ -1,3 +1,77 @@
-<ion-content>
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Medicamento</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
+<ion-content class="ion-padding">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <ion-list >
+            <ion-item>
+                <ion-label position="floating">Nome do Doutor:</ion-label>
+                <ion-input
+                    formControlName="doctor_name"
+                    type="text"
+                ></ion-input>
+            </ion-item>
+            <ion-item class="date-item">
+                <ion-label position="">Inicio da Receita:</ion-label>
+                <ion-datetime-button datetime="datetime-start"></ion-datetime-button>
+
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime
+                      id="datetime-start"
+                      presentation="date"
+                      formControlName="issue_date"
+                      [formatOptions]="{
+                        date: {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        }
+                      }"
+                      displayFormat="DD/MM/YYYY"
+                    ></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+            </ion-item>
+            <ion-item>
+                <ion-label position="">Fim da Receita:</ion-label>
+                <ion-datetime-button datetime="datetime-end"></ion-datetime-button>
+
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime
+                      id="datetime-end"
+                      presentation="date"
+                      formControlName="expiration_date"
+                      [formatOptions]="{
+                        date: {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        }
+                      }"
+                      displayFormat="DD/MM/YYYY"
+                    ></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Descrição:</ion-label>
+                <ion-textarea
+                    formControlName="description"
+                    rows="4"
+                    maxlength="500"
+                    placeholder="Escreva aqui observações"
+                >
+                </ion-textarea>
+            </ion-item>
+        </ion-list>
+        <ion-button expand="block" type="submit">Cadastrar Receita</ion-button>
+    </form>
 </ion-content>
