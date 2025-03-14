@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from '../user/user.service';
+import { retry } from 'rxjs';
+import { ExceptionCode } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root',
@@ -16,18 +18,13 @@ export class ImageStorageService {
     try {
       let file = e.target.files[0];
       const user = await this._userService.getCurrentUser();
-      const { data, error } = await this._supabaseClient.storage
+      const { data } = await this._supabaseClient.storage
         .from('Images')
         .upload(user.id + '/' + uuidv4(), file);
-      if (data) {
-        this.getMedia();
-      }
-      if (error) {
-        console.log(error);
-      }
+
+      return data
     } catch (error) {
-      console.error('error', error);
-    }
+      throw new Error('Error to upload image: ' + error);    }
   }
 
   async getMedia() {
@@ -36,6 +33,5 @@ export class ImageStorageService {
     const { data, error } = await this._supabaseClient.storage
       .from('Images')
       .list(user.id + '/', {});
-    console.log('data', data);
   }
 }
