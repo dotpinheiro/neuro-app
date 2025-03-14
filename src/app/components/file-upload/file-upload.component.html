@@ -1,0 +1,24 @@
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <input
+    #fileInput
+    type="file"
+    (change)="onFileSelected($event)"
+    accept=".jpg, .jpeg, .png, .pdf"
+    style="display: none"
+  />
+
+  <ion-button
+    (click)="fileInput.click()"
+    style="margin-top: 40px; margin-bottom: 40px"
+  >
+    Selecionar Imagem
+    <ion-icon slot="end" name="images"></ion-icon>
+  </ion-button>
+</div>

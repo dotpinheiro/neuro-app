@@ -15,7 +15,12 @@
         <ion-input
           formControlName="medication_name"
           type="text"
-          errorText="{{form.controls['medication_name'].invalid ? 'Este campo é obrigatório' : false}}">
+          errorText="{{
+            form.controls['medication_name'].invalid
+              ? 'Este campo é obrigatório'
+              : false
+          }}"
+        >
         </ion-input>
       </ion-item>
 
@@ -24,7 +29,12 @@
         <ion-input
           formControlName="medication_manufacturer"
           type="text"
-          errorText="{{form.controls['medication_manufacturer'].invalid ? 'Este campo é obrigatório' : false}}">
+          errorText="{{
+            form.controls['medication_manufacturer'].invalid
+              ? 'Este campo é obrigatório'
+              : false
+          }}"
+        >
         </ion-input>
       </ion-item>
 
@@ -33,11 +43,18 @@
         <ion-input
           formControlName="medication_description"
           type="text"
-          errorText="{{form.controls['medication_description'].invalid ? 'Este campo é obrigatório' : false}}">
+          errorText="{{
+            form.controls['medication_description'].invalid
+              ? 'Este campo é obrigatório'
+              : false
+          }}"
+        >
         </ion-input>
       </ion-item>
+      <app-file-upload />
     </ion-list>
-    <ion-button expand="block" type="submit">{{medicationId ? 'Atualizar' : 'Adicionar' }} Medicamento</ion-button>
+    <ion-button style="margin-top: 20px" expand="block" type="submit"
+      >{{ medicationId ? "Atualizar" : "Adicionar" }} Medicamento</ion-button
+    >
   </form>
-
 </ion-content>
