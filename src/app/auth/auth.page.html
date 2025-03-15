@@ -9,7 +9,7 @@
     <div class="actions-container">
       <div class="button fb" (click)="signIn('facebook')"><ion-icon name="logo-facebook"></ion-icon>Entrar com Facebook</div>
       <div class="button google" (click)="signIn('google')"><ion-icon name="logo-google"></ion-icon>Entrar com Google</div>
-      <div class="button apple" (click)="signIn('apple')"><ion-icon name="logo-apple"></ion-icon>Entrar com Apple ID</div>
+      <div *ngIf="platform.is('ios')" class="button apple" (click)="signIn('apple')"><ion-icon name="logo-apple"></ion-icon>Entrar com Apple ID</div>
     </div>
   </div>
   <div class="credits">
