@@ -5,6 +5,8 @@ import {ProfileService} from "./services/profile/profile.service";
 import {ModalController} from "@ionic/angular";
 import {FeedbackFormComponent} from "./components/feedback-form/feedback-form.component";
 import { requestForToken } from 'src/firebase';
+import {AlarmService} from "./services/alarm/alarm.service";
+import {LocalNotifications} from "@capacitor/local-notifications";
 
 @Component({
   selector: 'app-root',
@@ -16,8 +18,12 @@ export class AppComponent implements OnInit {
     private _supabaseClient: SupabaseClient,
     private _profileService: ProfileService,
     private _modalController: ModalController,
+    private _alarmService: AlarmService,
     private _router: Router
   ) {
+    if(localStorage.getItem('logged') === 'true') {
+      this._router.navigate(['/tabs/medications']);
+    }
   }
 
   async openFeedbackForm() {
@@ -31,13 +37,28 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("init")
+    await LocalNotifications.requestPermissions();
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: 'Remedinho bora?',
+          body: `bora bora?`,
+          id: 1,
+          schedule: { at: new Date(Date.now()) },
+          sound: 'default',
+          attachments: undefined,
+          actionTypeId: '',
+          extra: null
+        }
+      ]
+    })
+    await this._alarmService.scheduleAlarms();
     await this.openFeedbackForm();
-    requestForToken();
 
     this._supabaseClient.auth.onAuthStateChange(async (event, session) => {
-      if(event === 'INITIAL_SESSION' && session !== null) {
-        console.log('User signed in');
+      console.debug(event, session)
+      if((event === 'INITIAL_SESSION' || event === 'SIGNED_IN') && session !== null) {
+        console.debug('User signed in');
         const profiles = await this._profileService.getProfiles(session.user.id);
         localStorage.setItem('logged', 'true');
         if(profiles.length > 0) {
