@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Medication } from 'src/app/services/profile/medication/medication.interface';
+import { MedicationService } from 'src/app/services/profile/medication/medication.service';
 import { PrescriptionService } from 'src/app/services/profile/prescription/prescription.service';
 
 @Component({
@@ -10,11 +12,14 @@ import { PrescriptionService } from 'src/app/services/profile/prescription/presc
 })
 export class AddPrescriptionComponent{
   form: FormGroup;
+  currentStep = 1;
+  medications: Medication[] = []
 
   constructor(
     private modalController: ModalController,
     private fb: FormBuilder,
-    private prescriptionService: PrescriptionService
+    private prescriptionService: PrescriptionService,
+    private medicationService: MedicationService
   ) { 
     this.form = fb.group({
       issue_date: [new Date().toISOString(), Validators.required],
@@ -22,6 +27,29 @@ export class AddPrescriptionComponent{
       doctor_name: [null, Validators.required],
       description: [null, Validators.maxLength(500)]
     })
+
+    this.getProfileMedications().then((medicationsRetrieve: Medication[]) => {
+      this.medications = medicationsRetrieve;
+    }).catch((error) => {
+      console.error('Erro ao buscar medicações', error)
+    });
+  }
+
+  getProfileMedications(): Promise<Medication[]> {
+    return this.medicationService.getMedications()
+  }
+
+  nexStep() {
+    if (this.currentStep < 2) {
+      this.currentStep++;
+    }
+    console.log(this.currentStep)
+  }
+
+  previousStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
   }
 
   submit() {

@@ -9,7 +9,7 @@
 
 <ion-content class="ion-padding">
     <form [formGroup]="form" (ngSubmit)="submit()">
-        <ion-list >
+        <ion-list *ngIf="currentStep === 1">
             <ion-item>
                 <ion-label position="floating">Nome do Doutor:</ion-label>
                 <ion-input
@@ -72,6 +72,14 @@
                 </ion-textarea>
             </ion-item>
         </ion-list>
-        <ion-button expand="block" type="submit">Cadastrar Receita</ion-button>
+        <ion-list *ngIf="currentStep === 2">
+          <ion-item>
+            <ion-select>
+              <ion-select-option *ngFor="let medication of medications" value="medication.id">{{ medication.medication_name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+        <ion-button *ngIf="currentStep === 1" expand="block" (click)="nexStep()">Adicionar Medicamentos</ion-button>
+        <ion-button *ngIf="currentStep === 2" expand="block" type="submit">Cadastrar Receita</ion-button>
     </form>
 </ion-content>
