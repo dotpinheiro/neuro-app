@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-terms-of-use-modal',
@@ -7,8 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TermsOfUseModalComponent  implements OnInit {
 
+  @Output() close = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit() {}
+
+  closeModal(event: MouseEvent) {
+    const modalContent = document.querySelector('.modal-content');
+    if (event.target === event.currentTarget) {
+      this.close.emit();
+    }
+  }
 
 }
