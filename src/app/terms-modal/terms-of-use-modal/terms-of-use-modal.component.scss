@@ -25,13 +25,15 @@
         position: absolute;
         top: 1rem;
         right: 1rem;
+        background: none;
         font-size: 1.5rem;
         font-weight: bold;
-        color: #444;
         cursor: pointer;
-  
+        padding: 0;
+        line-height: 1;
+
         &:hover {
-          color: #000;
+          color: #d10000;
         }
       }
   

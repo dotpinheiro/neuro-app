@@ -61,7 +61,6 @@ export class AuthPage {
   }
 
   async openPrivacyPolicy() {
-    console.log('Abrir Política de Privacidade');
     const modal = await this.modalController.create({
       component: PrivacyPolicyModalComponent,
     });
