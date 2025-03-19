@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Medication } from 'src/app/services/profile/medication/medication.interface';
 import { MedicationService } from 'src/app/services/profile/medication/medication.service';
@@ -13,7 +13,7 @@ import { PrescriptionService } from 'src/app/services/profile/prescription/presc
 export class AddPrescriptionComponent{
   form: FormGroup;
   currentStep = 1;
-  medications: Medication[] = []
+  medicationsList: Medication[] = []
 
   constructor(
     private modalController: ModalController,
@@ -25,11 +25,12 @@ export class AddPrescriptionComponent{
       issue_date: [new Date().toISOString(), Validators.required],
       expiration_date: [new Date().toISOString(), Validators.required],
       doctor_name: [null, Validators.required],
-      description: [null, Validators.maxLength(500)]
+      description: [null, Validators.maxLength(500)],
+      medications: this.fb.array([this.createMedication()], Validators.required)
     })
 
     this.getProfileMedications().then((medicationsRetrieve: Medication[]) => {
-      this.medications = medicationsRetrieve;
+      this.medicationsList = medicationsRetrieve;
     }).catch((error) => {
       console.error('Erro ao buscar medicações', error)
     });
@@ -37,6 +38,26 @@ export class AddPrescriptionComponent{
 
   getProfileMedications(): Promise<Medication[]> {
     return this.medicationService.getMedications()
+  }
+
+  createMedication() {
+    return this.fb.group({
+      medicationId: ['', Validators.required],
+      dosagem: ['', Validators.required],
+      instruction: ['']
+    });
+  }
+
+  addMedication() {
+    this.medications.push(this.createMedication());
+  }
+
+  removeMedication(index: number) {
+    this.medications.removeAt(index);
+  }
+
+  get medications() {
+    return this.form.get('medications') as FormArray;
   }
 
   nexStep() {

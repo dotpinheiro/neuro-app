@@ -72,10 +72,13 @@
                 </ion-textarea>
             </ion-item>
         </ion-list>
+        <div></div>
         <ion-list *ngIf="currentStep === 2">
           <ion-item>
-            <ion-select>
-              <ion-select-option *ngFor="let medication of medications" value="medication.id">{{ medication.medication_name }}</ion-select-option>
+            <ion-select
+              formControlName=""
+            >
+              <ion-select-option *ngFor="let medication of medicationsList" [value]="medication.id">{{ medication.medication_name }}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-list>
