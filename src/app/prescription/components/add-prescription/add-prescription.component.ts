@@ -13,7 +13,26 @@ import { PrescriptionService } from 'src/app/services/profile/prescription/presc
 export class AddPrescriptionComponent{
   form: FormGroup;
   currentStep = 1;
-  medicationsList: Medication[] = []
+  // medicationsList: Medication[] = []
+  medicationsList: Medication[] = [
+    {
+      id: 1,
+      profile_id: 1,
+      medication_name: "Dipirona",
+      medication_quantity: 10,
+      medication_manufacturer: "EMC",
+      medication_description: "Dores e febre",
+      medication_img: "asdasda"
+  },
+  {
+    id: 2,
+    profile_id: 1,
+    medication_name: "Paracetamol",
+    medication_quantity: 10,
+    medication_manufacturer: "EMC",
+    medication_description: "Dores e febre",
+    medication_img: "asdasda"
+  }]
 
   constructor(
     private modalController: ModalController,
@@ -29,11 +48,11 @@ export class AddPrescriptionComponent{
       medications: this.fb.array([this.createMedication()], Validators.required)
     })
 
-    this.getProfileMedications().then((medicationsRetrieve: Medication[]) => {
-      this.medicationsList = medicationsRetrieve;
-    }).catch((error) => {
-      console.error('Erro ao buscar medicações', error)
-    });
+    // this.getProfileMedications().then((medicationsRetrieve: Medication[]) => {
+    //   this.medicationsList = medicationsRetrieve;
+    // }).catch((error) => {
+    //   console.error('Erro ao buscar medicações', error)
+    // });
   }
 
   getProfileMedications(): Promise<Medication[]> {
