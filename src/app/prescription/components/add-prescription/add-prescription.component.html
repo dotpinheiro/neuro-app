@@ -95,14 +95,17 @@
               <ion-item class="und-item">
                 <ion-select
                   formControlName="medicationId"
-                  placeholder="Selecione um Medicamento"
+                  placeholder="Dosagem"
                 >
-                  <ion-select-option *ngFor="let med of medicationsList" [value]="med.id">{{ med.medication_name }}</ion-select-option>
+                  <ion-select-option *ngFor="let med of dosageUnit" [value]="med">{{ med }}</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>
           </ion-row>
-
+          <ion-item>
+            <ion-label position="floating">Dosagem:</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
         </ion-list>
 
         <ion-button *ngIf="currentStep === 1" expand="block" (click)="nexStep()">Adicionar Medicamentos</ion-button>

@@ -14,6 +14,8 @@ export class AddPrescriptionComponent{
   form: FormGroup;
   currentStep = 1;
   // medicationsList: Medication[] = []
+  dosageUnit = ['mg', 'mcg', 'UI', 'g', 'mL', '%']
+
   medicationsList: Medication[] = [
     {
       id: 1,
@@ -63,7 +65,7 @@ export class AddPrescriptionComponent{
     return this.fb.group({
       medicationId: ['', Validators.required],
       dosagem: ['', Validators.required],
-      instruction: ['']
+      instruction: ['mg']
     });
   }
 
