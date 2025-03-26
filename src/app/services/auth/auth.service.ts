@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SupabaseClient } from '@supabase/supabase-js';
 import {Platform} from "@ionic/angular";
 import {SocialLogin} from "@capgo/capacitor-social-login";
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
 @Injectable({
   providedIn: 'root'
@@ -54,8 +55,6 @@ export class AuthService {
       console.debug("data", data)
 
       if (error) throw error;
-
-      await this._router.navigate(['/tabs'])
 
       return data;
     } catch (error) {
