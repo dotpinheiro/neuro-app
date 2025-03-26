@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {SupabaseClient} from "@supabase/supabase-js";
 import {ProfileService} from "../profile.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,11 @@ import {ProfileService} from "../profile.service";
 export class TimerService {
 
   timers: any = [];
+  private _updatedEvent = new BehaviorSubject(this.timers);
 
   constructor(
     private _supabase: SupabaseClient,
-    private _profileService: ProfileService
+    private _profileService: ProfileService,
   ) { }
 
   async getTimers() {
@@ -45,6 +47,7 @@ export class TimerService {
     }
 
     await Promise.all(timer.medications?.map((medicationId: string) => this.insertMedicationSchedule(medicationId, data[0]?.id)));
+    this.triggerUpdateEvent();
   }
 
   async updateTimer(timerId: string, timer: any) {
@@ -54,6 +57,7 @@ export class TimerService {
     }
 
     await Promise.all(timer.medications?.map((medicationId: string) => this.updateMedicationSchedule(medicationId, timer.id)));
+    this.triggerUpdateEvent();
   }
 
   async insertSchedule(timer: any) {
@@ -102,6 +106,7 @@ export class TimerService {
     if(error) {
       throw error;
     }
+    this.triggerUpdateEvent();
     return data;
   }
 
@@ -115,6 +120,7 @@ export class TimerService {
     if(error) {
       throw error;
     }
+    this.triggerUpdateEvent();
     return data;
   }
 
@@ -125,5 +131,13 @@ export class TimerService {
       throw error;
     }
     return data;
+  }
+
+  private triggerUpdateEvent() {
+    this._updatedEvent.next(this.timers);
+  }
+
+  get updatedEvent() {
+    return this._updatedEvent.asObservable();
   }
 }

@@ -4,7 +4,6 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import {ProfileService} from "./services/profile/profile.service";
 import {ModalController} from "@ionic/angular";
 import {FeedbackFormComponent} from "./components/feedback-form/feedback-form.component";
-import { requestForToken } from 'src/firebase';
 import {AlarmService} from "./services/alarm/alarm.service";
 import {LocalNotifications} from "@capacitor/local-notifications";
 
@@ -21,9 +20,6 @@ export class AppComponent implements OnInit {
     private _alarmService: AlarmService,
     private _router: Router
   ) {
-    if(localStorage.getItem('logged') === 'true') {
-      this._router.navigate(['/tabs/medications']);
-    }
   }
 
   async openFeedbackForm() {
@@ -37,42 +33,20 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await LocalNotifications.checkPermissions();
     await LocalNotifications.requestPermissions();
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: 'Remedinho bora?',
-          body: `bora bora?`,
-          id: 1,
-          schedule: { at: new Date(Date.now()) },
-          sound: 'default',
-          attachments: undefined,
-          actionTypeId: '',
-          extra: null
-        }
-      ]
-    })
+
+    const { data: { user } } = await this._supabaseClient.auth.getUser();
+    if(user) {
+      const profiles = await this._profileService.getProfiles(user.id);
+      if(profiles.length > 0) {
+        await this._router.navigate(['/tabs/medications']);
+        return;
+      }
+      await this._router.navigate(['/additional-info']);
+    }
+
     await this._alarmService.scheduleAlarms();
     await this.openFeedbackForm();
-
-    this._supabaseClient.auth.onAuthStateChange(async (event, session) => {
-      console.debug(event, session)
-      if((event === 'INITIAL_SESSION' || event === 'SIGNED_IN') && session !== null) {
-        console.debug('User signed in');
-        const profiles = await this._profileService.getProfiles(session.user.id);
-        localStorage.setItem('logged', 'true');
-        if(profiles.length > 0) {
-            await this._router.navigate(['/tabs/medications']);
-          return;
-        }
-        await this._router.navigate(['/additional-info']);
-      }
-
-      if(event === 'SIGNED_OUT') {
-        console.log('User signed out');
-        localStorage.removeItem('logged');
-        await this._router.navigate(['/auth']);
-      }
-    });
   }
 }
