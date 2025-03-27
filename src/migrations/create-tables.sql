@@ -2,12 +2,6 @@ CREATE TYPE scope_enum AS ENUM ('user', 'doctor', 'caregiver');
 CREATE TYPE sex_enum AS ENUM ('m', 'f');
 CREATE TYPE dosage_enum AS ENUM ('ml', 'mg', 'g', 'pills', 'drops');
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(255),
-    phone VARCHAR(255)
-);
-
 CREATE TABLE profiles (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
@@ -21,10 +15,10 @@ CREATE TABLE profiles (
 
 CREATE TABLE user_profiles (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id UUID NOT NULL,
     profile_id INT NOT NULL,
     scope scope_enum,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE,
     FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE CASCADE
 );
 

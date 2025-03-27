@@ -3,14 +3,15 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 // Firebase config from Firebase Console
 const firebaseConfig = {
-    apiKey: "AIzaSyAtzkGC1vT9Pwuk0xbLwX4HHYbzc4tAbyA",
-    authDomain: "neuro-app-utf.firebaseapp.com",
-    projectId: "neuro-app-utf",
-    storageBucket: "neuro-app-utf.firebasestorage.app",
-    messagingSenderId: "512479156684",
-    appId: "1:512479156684:web:3cdf4bc3873e6cdb41e569",
-    measurementId: "G-PNMZL1DGS6"
-  };
+  apiKey: "AIzaSyBQH5ECmvlH585yETvvUQyvxVLdjN2SKsg",
+  authDomain: "neuroapp-da330.firebaseapp.com",
+  projectId: "neuroapp-da330",
+  storageBucket: "neuroapp-da330.firebasestorage.app",
+  messagingSenderId: "43238959599",
+  appId: "1:43238959599:web:8e81ae0e8b52e06870ae1a",
+  measurementId: "G-SFB5CW53DY"
+};
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

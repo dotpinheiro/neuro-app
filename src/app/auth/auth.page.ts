@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
+import {Platform} from "@ionic/angular";
 
 @Component({
   selector: 'app-auth',
@@ -8,7 +9,10 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class AuthPage {
 
-  constructor(private _authService: AuthService) { }
+  constructor(
+    private _authService: AuthService,
+    public platform: Platform
+  ) { }
 
   async signIn(method:string) {
     switch (method) {
