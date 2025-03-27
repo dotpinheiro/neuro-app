@@ -5,6 +5,9 @@ const config: CapacitorConfig = {
   appName: 'neuro-app',
   webDir: 'www',
   plugins: {
+    LocalNotification: {
+      "sound": "sound.mp3"
+    },
     PushNotifications: {
       presentationOptions: ["badge", "sound", "alert"]
     },
