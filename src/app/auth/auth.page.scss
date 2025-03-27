@@ -45,7 +45,7 @@ ion-content {
   }
   .actions-container{
     position: absolute;
-    bottom: 10%;
+    bottom: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,8 +85,55 @@ ion-content {
         color: #fff;
       }
     }
-
   }
+
+  .terms-container {
+    position: absolute;
+    width: 80%;
+    bottom: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+  
+    ion-item {
+      --background: transparent;
+      --padding-start: 0;
+      --inner-padding-end: 0;
+      --border-width: 0;
+      --inner-border-width: 0;
+      width: 100%;
+  
+      ion-checkbox {
+        --size: 20px;
+        --background-checked: #48a1ff;
+        --border-color-checked: #48a1ff;
+        --border-color: #000;
+        --border-width: 2px;
+        margin-left: auto;
+      }
+  
+      ion-label {
+        font-size: 14px;
+        color: #000;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        white-space: normal;
+  
+        a {
+          color: #48a1ff;
+          text-decoration: none;
+          font-weight: bold;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
   .credits {
     position: absolute;
     text-align: center;

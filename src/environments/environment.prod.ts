@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  supabaseURL: 'https://supabase-neuroapp.sa.pinheiro.tech',
-  supabaseKey: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTczMTg1NDY0MCwiZXhwIjo0ODg3NTI4MjQwLCJyb2xlIjoiYW5vbiJ9.PT-Ofbcjm4e7OsRpyjgQLwWfJ6gsRW2-OrAMcP5VNQE'
+  supabaseURL: 'https://oqyemdsbnvgjdhbfkpbh.supabase.co',
+  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeWVtZHNibnZnamRoYmZrcGJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI4NTQxMDIsImV4cCI6MjA1ODQzMDEwMn0.vzUok4dXUQIRD3H3A_Mr5rTtfl9ETe-6hUYf_MHXRfA'
 };

@@ -4,9 +4,9 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import {ProfileService} from "./services/profile/profile.service";
 import {ModalController} from "@ionic/angular";
 import {FeedbackFormComponent} from "./components/feedback-form/feedback-form.component";
-import { requestForToken } from 'src/firebase';
 import {AlarmService} from "./services/alarm/alarm.service";
 import {LocalNotifications} from "@capacitor/local-notifications";
+import {AuthService} from "./services/auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -16,54 +16,44 @@ import {LocalNotifications} from "@capacitor/local-notifications";
 export class AppComponent implements OnInit {
   constructor(
     private _supabaseClient: SupabaseClient,
+    private _authService: AuthService,
     private _profileService: ProfileService,
     private _modalController: ModalController,
     private _alarmService: AlarmService,
     private _router: Router
   ) {
-    if(localStorage.getItem('logged') === 'true') {
-      this._router.navigate(['/tabs/medications']);
-    }
   }
 
   async ngOnInit() {
+    await LocalNotifications.checkPermissions();
     await LocalNotifications.requestPermissions();
     await this.openFeedbackForm();
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: 'Remedinho bora?',
-          body: `bora bora?`,
-          id: 1,
-          schedule: { at: new Date(Date.now()) },
-          sound: 'default',
-          attachments: undefined,
-          actionTypeId: '',
-          extra: null
-        }
-      ]
-    })
-    await this._alarmService.scheduleAlarms();
 
-    this._supabaseClient.auth.onAuthStateChange(async (event, session) => {
-      console.debug(event, session)
-      if((event === 'INITIAL_SESSION' || event === 'SIGNED_IN') && session !== null) {
-        console.debug('User signed in');
-        const profiles = await this._profileService.getProfiles(session.user.id);
-        localStorage.setItem('logged', 'true');
-        if(profiles.length > 0) {
-            await this._router.navigate(['/tabs/medications']);
+    this._authService.authStateChanged.subscribe(async (authState) => {
+      switch (authState?.event) {
+        case 'INITIAL_SESSION':
+        case 'SIGN_IN': {
+          const { data: { user } } = await this._supabaseClient.auth.getUser();
+          if(user) {
+            const profiles = await this._profileService.getProfiles(user.id);
+            if(profiles.length > 0) {
+              await this._router.navigate(['/tabs/medications']);
+              return;
+            }
+            await this._router.navigate(['/additional-info']);
+          }
+
+          await this._alarmService.scheduleAlarms();
+          await this.openFeedbackForm();
           return;
         }
-        await this._router.navigate(['/additional-info']);
-      }
-
-      if(event === 'SIGNED_OUT') {
-        console.log('User signed out');
-        localStorage.removeItem('logged');
-        await this._router.navigate(['/auth']);
+        case 'SIGN_OUT': {
+          await this._router.navigate(['/auth']);
+          return;
+        }
       }
     });
+
   }
 
   async openFeedbackForm() {

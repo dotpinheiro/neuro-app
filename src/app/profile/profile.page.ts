@@ -48,7 +48,7 @@ export class ProfilePage implements OnInit {
       height: profile.height,
       weight: profile.weight,
       medication_started_at: profile.medication_started_at,
-      img: profile.img || 'assets/img/profile-placeholder.png',
+      img: profile.img || currentUser.user_metadata['avatar_url'] || 'assets/img/profile-placeholder.webp',
     });
   }
 
