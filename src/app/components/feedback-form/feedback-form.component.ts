@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, LoadingController, ModalController, NavParams, ToastController} from "@ionic/angular";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MedicationService} from "../../services/profile/medication/medication.service";
+import { AlertController, LoadingController, ModalController, NavParams, ToastController } from "@ionic/angular";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MedicationService } from "../../services/profile/medication/medication.service";
+import { FeedbackService } from "../../services/feedback/feedback.service";
 
 @Component({
   selector: 'app-feedback-form',
@@ -21,7 +22,9 @@ export class FeedbackFormComponent {
     private alertCtrl: AlertController,
     private navParams: NavParams,
     private toastController: ToastController,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private feedbackService: FeedbackService
+  ) {
     this.form = this.fb.group({
       medication_name: [null, Validators.required],
       medication_manufacturer: [null, Validators.required],
@@ -29,19 +32,36 @@ export class FeedbackFormComponent {
     });
   }
 
-
   async enviarFeedback() {
-    console.log('Humor:', this.humor);
-    console.log('Sintomas:', this.sintomas);
+    const feedbackData = {
+      humor: this.humor,
+      sintomas: this.sintomas,
+    };
 
-    const toast = await this.toastController.create({
-      message: 'Humor enviado com sucesso!',
-      duration: 2000,
-      color: 'success',
+    const loading = await this.loadingCtrl.create({
+      message: 'Enviando feedback...',
     });
-    await toast.present();
+    await loading.present();
 
-    await this.modalController.dismiss()
+    try {
+      await this.feedbackService.saveFeedback(feedbackData);
+      const toast = await this.toastController.create({
+        message: 'Humor enviado com sucesso!',
+        duration: 2000,
+        color: 'success',
+      });
+      await toast.present();
+      await this.modalController.dismiss();
+    } catch (error) {
+      const alert = await this.alertCtrl.create({
+        header: 'Erro',
+        message: 'Não foi possível enviar o feedback. Tente novamente mais tarde.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    } finally {
+      await loading.dismiss();
+    }
   }
 
   getColor(value: number): string {
