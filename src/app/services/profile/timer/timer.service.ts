@@ -29,6 +29,17 @@ export class TimerService {
     return data;
   }
 
+  async getMedicationsByTimerId(timerId: string) {
+    const { data, error } = await this._supabase.from('profile_medications_schedule').select(`
+      profile_medications (medication_name, medication_manufacturer)
+    `)
+      .eq('profile_schedule_id', timerId);
+    if(error) {
+      throw error;
+    }
+    return data;
+  }
+
   async getTimerById(timerId: string) {
     const currentProfile = await this._profileService.getCurrentProfile();
     const { data, error } = await this._supabase.from('profile_schedule').select('*')
