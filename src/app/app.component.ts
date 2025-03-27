@@ -26,18 +26,9 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async openFeedbackForm() {
-    const modal = await this._modalController.create({
-      component: FeedbackFormComponent,
-      componentProps: {
-      },
-      cssClass: 'feedback-form'
-    } as any);
-    await modal.present();
-  }
-
   async ngOnInit() {
     await LocalNotifications.requestPermissions();
+    await this.openFeedbackForm();
     await LocalNotifications.schedule({
       notifications: [
         {
@@ -53,7 +44,6 @@ export class AppComponent implements OnInit {
       ]
     })
     await this._alarmService.scheduleAlarms();
-    await this.openFeedbackForm();
 
     this._supabaseClient.auth.onAuthStateChange(async (event, session) => {
       console.debug(event, session)
@@ -74,5 +64,15 @@ export class AppComponent implements OnInit {
         await this._router.navigate(['/auth']);
       }
     });
+  }
+
+  async openFeedbackForm() {
+    const modal = await this._modalController.create({
+      component: FeedbackFormComponent,
+      componentProps: {
+      },
+      cssClass: 'feedback-form'
+    } as any);
+    await modal.present();
   }
 }
