@@ -7,14 +7,13 @@ import { FeedbackService } from '../services/feedback/feedback.service';
   styleUrls: ['./feedback-history.page.scss'],
 })
 export class FeedbackHistoryPage implements OnInit {
-  constructor(
-    public feedbackService: FeedbackService
-  ) {}
+  feedbacks: any[] = [];
+
+  constructor(public feedbackService: FeedbackService) {}
 
   async ngOnInit() {
     try {
-      const feedbacks = await this.feedbackService.getFeedbacks();
-      console.log('Feedbacks:', feedbacks);
+      this.feedbacks = await this.feedbackService.getFeedbacks();
     } catch (error) {
       console.error('Error fetching feedbacks:', error);
     }
