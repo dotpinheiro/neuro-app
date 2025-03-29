@@ -18,4 +18,26 @@ export class FeedbackHistoryPage implements OnInit {
       console.error('Error fetching feedbacks:', error);
     }
   }
+
+  getHumorIcon(humor: number): string {
+    if (humor >= 0 && humor <= 3) {
+      return 'sad-outline';
+    } else if (humor >= 4 && humor <= 6) {
+      return 'hand-right-outline';
+    } else if (humor >= 7 && humor <= 10) {
+      return 'happy-outline';
+    }
+    return 'help-outline'; 
+  }
+
+  getHumorColor(humor: number): string {
+    if (humor >= 0 && humor <= 3) {
+      return 'red';
+    } else if (humor >= 4 && humor <= 6) {
+      return 'yellow';
+    } else if (humor >= 7 && humor <= 10) {
+      return 'green';
+    }
+    return 'gray';
+  }
 }
