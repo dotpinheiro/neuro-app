@@ -22,4 +22,16 @@ export class FeedbackService {
     }
     return data;
   }
+
+  async getFeedbacks() {
+    const currentProfile = await this._profileService.getCurrentProfile();
+    const { data, error } = await this._supabase
+      .from('feedback_form')
+      .select('*')
+      .eq('profile_id', currentProfile.id);
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
 }

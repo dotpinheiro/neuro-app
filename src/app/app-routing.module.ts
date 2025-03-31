@@ -55,6 +55,10 @@ const routes: Routes = [
     path: 'prescription',
     loadChildren: () => import('./prescription/prescription.module').then( m => m.PrescriptionPageModule)
   },
+  {
+    path: 'feedback-history',
+    loadChildren: () => import('./feedback-history/feedback-history.module').then( m => m.FeedbackHistoryPageModule)
+  },
 ];
 
 @NgModule({
