@@ -1,0 +1,30 @@
+  .sintomas-text {
+    font-size: 1.5rem; 
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .humor-text {
+    font-size: 1.5rem; 
+    font-weight: bold;
+    color: white;
+  }
+  
+  .icon-humor {
+    color: var(--ion-color-primary);
+    margin-right: 8px;
+    font-size: 1.5rem;
+  }
+  
+  .icon-sintomas {
+    color: var(--ion-color-secondary);
+    margin-right: 8px;
+    font-size: 1.2rem;
+  }
+  
+  .icon-data {
+    color: var(--ion-color-medium);
+    margin-right: 8px;
+    font-size: 1.2rem;
+  }
