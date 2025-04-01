@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { SupabaseClient } from '@supabase/supabase-js';
-import {Platform} from "@ionic/angular";
+import {AlertController, Platform} from "@ionic/angular";
 import {SocialLogin} from "@capgo/capacitor-social-login";
 import {BehaviorSubject} from "rxjs";
 
@@ -26,7 +26,8 @@ export class AuthService {
   constructor(
     private _supabase: SupabaseClient,
     private _router: Router,
-    private _platform: Platform
+    private _platform: Platform,
+    private _alertCtrl: AlertController
   ) {
     this.initializeApp();
   }
@@ -88,6 +89,12 @@ export class AuthService {
   }
 
   async signInWithFacebook() {
+
+    return await this._alertCtrl.create({
+      header: 'Em breve!',
+      message: 'Autenticação com facebook em breve',
+      buttons: ['OK']
+    }).then(alert => alert.present());
 
     const facebookLoginResponse: any = await SocialLogin.login({
       provider: 'facebook',

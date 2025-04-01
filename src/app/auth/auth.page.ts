@@ -28,15 +28,15 @@ export class AuthPage {
         return;
     }
 
-    let user;
+    let data;
 
     switch (method) {
         case 'google': {
-            user = await this._authService.signInWithGoogle();
+            data = await this._authService.signInWithGoogle();
             break;
         }
         case 'facebook': {
-            user = await this._authService.signInWithFacebook();
+            data = await this._authService.signInWithFacebook();
             break;
         }
         default: {
@@ -44,8 +44,8 @@ export class AuthPage {
         }
     }
 
-    if (user) {
-        await this._termsService.acceptTerms(user.user.id);
+    if (data && data.user) {
+        await this._termsService.acceptTerms(data.user.id);
     }
 }
 

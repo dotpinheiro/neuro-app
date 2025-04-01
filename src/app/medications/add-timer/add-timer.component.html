@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Horário</ion-title>
+    <ion-title>Alarme</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">Fechar</ion-button>
     </ion-buttons>
@@ -11,7 +11,7 @@
   <form [formGroup]="form">
     <ion-list lines="none">
       <ion-item>
-        <ion-label position="floating">Nome*</ion-label>
+        <ion-label position="floating">Nome do alarme*</ion-label>
         <ion-input
           type="text"
           formControlName="name"
@@ -22,7 +22,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Medicações*</ion-label>
+        <ion-label>Medicações para tomar*</ion-label>
         <ion-select multiple="true" formControlName="medications">
           <ion-select-option *ngFor="let med of medService.medications; index as i" value="{{med.id}}">{{med.medication_name}}</ion-select-option>
         </ion-select>
