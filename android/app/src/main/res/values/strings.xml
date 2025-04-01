@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">neuro-app</string>
+    <string name="title_activity_main">neuro-app</string>
+    <string name="package_name">com.neuroapp.io</string>
+    <string name="custom_url_scheme">com.neuroapp.io</string>
+    <string name="facebook_app_id">1100115121666873</string>
+    <string name="facebook_client_token">de8c35fbeb96d4af1a5a28e815b1f726</string>
+    <string name="fb_login_protocol_scheme">fb1100115121666873</string>
+</resources>

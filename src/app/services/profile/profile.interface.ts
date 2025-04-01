@@ -1,4 +1,3 @@
-
 export enum ProfileScopes {
   USER = 'user',
   DOCTOR = 'doctor',
@@ -14,11 +13,17 @@ export enum SexEnum {
 export interface ProfileInterface {
   id?: string;
   name: string;
-  age: number
+  age: number;
   sex: SexEnum;
   img?: string;
   medication_started_at: string;
   height: number;
-  weight: number
+  weight: number;
+}
 
+export interface UserProfiles {
+  id: number;
+  profile_id: number;
+  scope: string;
+  user_id: string;
 }

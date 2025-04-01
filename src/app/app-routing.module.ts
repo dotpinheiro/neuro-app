@@ -37,6 +37,10 @@ const routes: Routes = [
         loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
       },
       {
+        path: 'feedback-history',
+        loadChildren: () => import('./feedback-history/feedback-history.module').then( m => m.FeedbackHistoryPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/medications',
         pathMatch: 'full'

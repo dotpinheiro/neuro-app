@@ -1,25 +1,20 @@
 <ion-tabs>
   <ion-header>
-    <ion-toolbar>
-      <ion-title>
-        NeuroApp
-      </ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="signOut()">
-          <ion-icon slot="icon-only" name="log-out"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
+    <app-header />
   </ion-header>
 
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="prescriptions">
-      <ion-icon name="book-outline"></ion-icon>
-      Receitas
-    </ion-tab-button>
+<!--    <ion-tab-button tab="prescriptions">-->
+<!--      <ion-icon name="book-outline"></ion-icon>-->
+<!--      Receitas-->
+<!--    </ion-tab-button>-->
     <ion-tab-button tab="medications">
       <ion-icon name="medkit-outline"></ion-icon>
       Medicações
+    </ion-tab-button>
+    <ion-tab-button tab="feedback-history">
+      <ion-icon name="time-outline"></ion-icon>
+      Histórico
     </ion-tab-button>
     <ion-tab-button tab="profile">
       <ion-icon name="person-outline"></ion-icon>
@@ -27,4 +22,3 @@
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
-

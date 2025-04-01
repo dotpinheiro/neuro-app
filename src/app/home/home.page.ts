@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { SupabaseClient } from '@supabase/supabase-js';
 
 @Component({
@@ -8,20 +7,14 @@ import { SupabaseClient } from '@supabase/supabase-js';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-
   public user: any;
 
-  constructor(private _supabaseClient: SupabaseClient) {
-
-  }
+  constructor(private _supabaseClient: SupabaseClient) {}
 
   ngOnInit() {
-    this._supabaseClient.auth.getUser().then(res => {
+    this._supabaseClient.auth.getUser().then((res) => {
       console.log(res);
       this.user = res.data.user?.user_metadata;
     });
   }
-
-
-
 }
