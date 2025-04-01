@@ -8,6 +8,7 @@ import {AlarmService} from "./services/alarm/alarm.service";
 import {LocalNotifications} from "@capacitor/local-notifications";
 import {AuthService} from "./services/auth/auth.service";
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -27,7 +28,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await LocalNotifications.checkPermissions();
     await LocalNotifications.requestPermissions();
-    await this.openFeedbackForm();
 
     this._authService.authStateChanged.subscribe(async (authState) => {
       switch (authState?.event) {
@@ -41,10 +41,9 @@ export class AppComponent implements OnInit {
               return;
             }
             await this._router.navigate(['/additional-info']);
+            await this._alarmService.scheduleAlarms();
+            await this.handleFeedbackForm();
           }
-
-          await this._alarmService.scheduleAlarms();
-          await this.openFeedbackForm();
           return;
         }
         case 'SIGN_OUT': {
@@ -54,6 +53,12 @@ export class AppComponent implements OnInit {
       }
     });
 
+  }
+
+  async handleFeedbackForm() {
+    if(Math.random() < 0.3) {
+      await this.openFeedbackForm();
+    }
   }
 
   async openFeedbackForm() {
