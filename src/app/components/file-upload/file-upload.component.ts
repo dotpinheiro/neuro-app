@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { ImageStorageService } from 'src/app/services/image-storage/image-storage.service';
 
 @Component({
@@ -11,25 +12,33 @@ export class FileUploadComponent {
   uploadProgress = 0;
   private allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
 
-  constructor(private _imageStorageService: ImageStorageService) {}
+    constructor(private _imageStorageService: ImageStorageService,private toastController: ToastController) {}
 
-  onFileSelected(event: Event): void {
+  async onFileSelected(event: Event): Promise<string> {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
     if (file && this.allowedTypes.includes(file.type)) {
       this.selectedFile = event;
-      this.onUpload();
+      return this.onUpload();
     } else {
-      alert('Por uma imagem com formato válido (JPEG, PNG or PDF)');
+      const toast = await this.toastController.create({
+        message:'Colocar uma imagem com formato válido (JPEG, PNG or PDF)',
+        duration: 2000,
+        color : 'danger'
+      })
+      await toast.present()
       input.value = '';
       this.selectedFile = null;
+
+      return ''
     }
   }
 
-  onUpload(): void {
+  onUpload(): string {
     if (this.selectedFile) {
       this._imageStorageService.uploadImage(this.selectedFile);
     }
+    return ''
   }
 }
