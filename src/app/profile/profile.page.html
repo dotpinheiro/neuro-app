@@ -1,4 +1,7 @@
 <ion-content [fullscreen]="true">
+  @if(isLoadingUserInfo){
+  <app-profile-skeleton />
+  } @else {
   <form [formGroup]="form" class="info-container">
     <div class="form">
       <div class="image-wrapper">
@@ -89,4 +92,5 @@
       </ion-button>
     </div>
   </form>
+  }
 </ion-content>
