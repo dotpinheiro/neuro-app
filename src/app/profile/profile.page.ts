@@ -14,6 +14,7 @@ import { UserService } from '../services/user/user.service';
 export class ProfilePage implements OnInit {
   form: FormGroup;
   isLoading = false;
+  isLoadingUserInfo = true;
 
   constructor(
     private _router: Router,
@@ -33,23 +34,34 @@ export class ProfilePage implements OnInit {
       img: [''],
     });
   }
-
   async ngOnInit() {
-    const currentUser = await this._userService.getCurrentUser();
-    const userProfile: any = (
-      await this._profileService.getProfiles(currentUser.id)
-    )[0];
-    const { profile } = userProfile;
-    this.form.patchValue({
-      id: userProfile.profile_id,
-      name: profile.name,
-      age: profile.age,
-      sex: profile.sex,
-      height: profile.height,
-      weight: profile.weight,
-      medication_started_at: profile.medication_started_at,
-      img: profile.img || currentUser.user_metadata['avatar_url'] || 'assets/img/profile-placeholder.webp',
-    });
+    try {
+
+      const currentUser = await this._userService.getCurrentUser();
+      const userProfile: any = (
+        await this._profileService.getProfiles(currentUser.id)
+      )[0];
+      const { profile } = userProfile;
+      this.form.patchValue({
+        id: userProfile.profile_id,
+        name: profile.name,
+        age: profile.age,
+        sex: profile.sex,
+        height: profile.height,
+        weight: profile.weight,
+        medication_started_at: profile.medication_started_at,
+        img: profile.img || currentUser.user_metadata['avatar_url'] || 'assets/img/profile-placeholder.webp',
+      });
+    } catch (error) {
+      this._toastService.presentToast(
+        'Erro ao mostrar informações',
+        undefined,
+        'top',
+        'danger'
+      );
+    }finally{
+      this.isLoadingUserInfo = false
+    }
   }
 
   async submit() {
