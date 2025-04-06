@@ -12,7 +12,10 @@ export class FileUploadComponent {
   uploadProgress = 0;
   private allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
 
-    constructor(private _imageStorageService: ImageStorageService,private toastController: ToastController) {}
+  constructor(
+    private _imageStorageService: ImageStorageService,
+    private toastController: ToastController
+  ) {}
 
   async onFileSelected(event: Event): Promise<string> {
     const input = event.target as HTMLInputElement;
@@ -23,15 +26,15 @@ export class FileUploadComponent {
       return this.onUpload();
     } else {
       const toast = await this.toastController.create({
-        message:'Colocar uma imagem com formato válido (JPEG, PNG or PDF)',
+        message: 'Colocar uma imagem com formato válido (JPEG, PNG or PDF)',
         duration: 2000,
-        color : 'danger'
-      })
-      await toast.present()
+        color: 'danger',
+      });
+      await toast.present();
       input.value = '';
       this.selectedFile = null;
 
-      return ''
+      return '';
     }
   }
 
@@ -39,6 +42,6 @@ export class FileUploadComponent {
     if (this.selectedFile) {
       this._imageStorageService.uploadImage(this.selectedFile);
     }
-    return ''
+    return '';
   }
 }

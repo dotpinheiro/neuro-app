@@ -19,19 +19,21 @@ export class ImageStorageService {
       let file = e.target.files[0];
       const user = await this._userService.getCurrentUser();
       const { data } = await this._supabaseClient.storage
-        .from('Images')
+        .from('gallery')
         .upload(user.id + '/' + uuidv4(), file);
-
-      return data
+      console.log(data);
+      // return path, fullPath and ID
+      return data;
     } catch (error) {
-      throw new Error('Error to upload image: ' + error);    }
+      throw new Error('Error to upload image: ' + error);
+    }
   }
 
   async getMedia() {
     const user = await this._userService.getCurrentUser();
 
     const { data, error } = await this._supabaseClient.storage
-      .from('Images')
+      .from('gallery')
       .list(user.id + '/', {});
   }
 }
