@@ -53,7 +53,7 @@ export class AdditionalInfoPage implements OnInit {
       this.isLoading = true;
       const userData: ProfileInterface = this.form.value as ProfileInterface;
       await this._profileService.createProfile(userData);
-      await this._router.navigate(['/tabs/home']);
+      await this._router.navigate(['/tabs/medications']);
     }catch (e: any){
      console.error('Error creating profile:', e);
     }

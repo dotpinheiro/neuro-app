@@ -11,6 +11,13 @@
       <div class="button google" (click)="signIn('google')"><ion-icon name="logo-google"></ion-icon>Entrar com Google</div>
       <div *ngIf="platform.is('ios')" class="button apple" (click)="signIn('apple')"><ion-icon name="logo-apple"></ion-icon>Entrar com Apple ID</div>
     </div>
+    <div class="terms-container">
+      <ion-item>
+        <ion-checkbox [(ngModel)]="acceptTerms">
+          <ion-label>Eu declaro que li e aceito os <a (click)="openTerms()">Termos de Uso</a> e a <a (click)="openPrivacyPolicy()">Política de Privacidade</a></ion-label>
+        </ion-checkbox>
+      </ion-item>
+    </div>
   </div>
   <div class="credits">
     <div>Desenvolvido com carinho por: UTFPR</div>

@@ -4,11 +4,11 @@
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="stock">
           <ion-icon name="medkit-outline"></ion-icon>
-          Estoque de medicamentos
+          Medicamentos
         </ion-tab-button>
         <ion-tab-button tab="time">
           <ion-icon name="time-outline"></ion-icon>
-          Horários de medicamentos
+          Alarmes
         </ion-tab-button>
       </ion-tab-bar>
     </ion-header>
@@ -41,7 +41,7 @@
     <ion-tab tab="time">
       <div>
         <div class="actions-container">
-          <ion-button (click)="addTimer()">Adicionar horário</ion-button>
+          <ion-button (click)="addTimer()">Adicionar alarme</ion-button>
         </div>
         <ion-list>
           <ion-item-sliding *ngFor="let time of timerService.timers">

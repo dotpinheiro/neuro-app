@@ -1,0 +1,36 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Histórico de Humor</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="(feedbacks?.length ?? 0) > 0; else noFeedback">
+    <ion-card *ngFor="let feedback of feedbacks">
+      <ion-card-header>
+        <ion-card-title class="humor-text">
+          <ion-icon
+            [name]="getHumorIcon(feedback.humor)"
+            [style.color]="getHumorColor(feedback.humor)"
+            class="icon-humor"
+          ></ion-icon>
+          Nível de Humor: {{ feedback.humor }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="sintomas-text">
+          <ion-icon name="medkit-outline" class="icon-sintomas"></ion-icon>
+          Sintomas: {{ feedback.sintomas }}
+        </p>
+        <p>
+          <ion-icon name="calendar-outline" class="icon-data"></ion-icon>
+          Data: {{ feedback.created_at | date: 'short' }}
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ng-template #noFeedback>
+    <p style="text-align: center; margin-top: 20px;">Nenhum feedback encontrado.</p>
+  </ng-template>
+</ion-content>

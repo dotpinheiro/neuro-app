@@ -1,20 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { SupabaseClient } from '@supabase/supabase-js';
-import {Platform} from "@ionic/angular";
+import {AlertController, Platform} from "@ionic/angular";
 import {SocialLogin} from "@capgo/capacitor-social-login";
-import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
+import {BehaviorSubject} from "rxjs";
+
+enum AUTH_EVENTS {
+  INITIAL_SESSION = 'INITIAL_SESSION',
+  SIGN_IN = 'SIGN_IN',
+  SIGN_OUT = 'SIGN_OUT'
+}
+
+interface AuthState {
+  event: AUTH_EVENTS;
+  data: any;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
+
+  private _authStateChanged = new BehaviorSubject<AuthState | null>(null);
 
   constructor(
     private _supabase: SupabaseClient,
     private _router: Router,
-    private _platform: Platform
+    private _platform: Platform,
+    private _alertCtrl: AlertController
   ) {
     this.initializeApp();
   }
@@ -30,6 +43,13 @@ export class AuthService {
         clientToken: 'de8c35fbeb96d4af1a5a28e815b1f726'
       }
     });
+    const user = await this._supabase.auth.getUser();
+    if(user) {
+      this._authStateChanged.next({
+        event: AUTH_EVENTS.INITIAL_SESSION,
+        data: user
+      });
+    }
   }
 
   async signInWithGoogle() {
@@ -56,6 +76,11 @@ export class AuthService {
 
       if (error) throw error;
 
+      this._authStateChanged.next({
+        event: AUTH_EVENTS.SIGN_IN,
+        data
+      });
+
       return data;
     } catch (error) {
       console.error('Erro ao autenticar:', error);
@@ -64,6 +89,12 @@ export class AuthService {
   }
 
   async signInWithFacebook() {
+
+    return await this._alertCtrl.create({
+      header: 'Em breve!',
+      message: 'Autenticação com facebook em breve',
+      buttons: ['OK']
+    }).then(alert => alert.present());
 
     const facebookLoginResponse: any = await SocialLogin.login({
       provider: 'facebook',
@@ -96,7 +127,14 @@ export class AuthService {
 
   async signOut() {
     await this._supabase.auth.signOut();
-    await this._router.navigate(['/auth']);
+    this._authStateChanged.next({
+      event: AUTH_EVENTS.SIGN_OUT,
+      data: null
+    });
+  }
+
+  get authStateChanged() {
+    return this._authStateChanged.asObservable();
   }
 
 }

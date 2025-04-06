@@ -46,13 +46,12 @@ export class AlarmService {
     for(const timer of timers){
       if(!timer.status) continue;
       const [hours, minutes] = timer.time.split(':');
-
+      const medications = await this._timerService.getMedicationsByTimerId(timer.id);
       const notifications: LocalNotificationSchema[] = timer.week_days.map((weekday: any) => (
         {
-          title: '🔔 Hora do medicamento!',
-          body: timer.name,
+          title: `🔔 Hora do medicamento! ${timer.name}`,
+          body: `Tome os medicamentos:${medications?.map((medication: any) => medication.profile_medications.medication_name).join(', ')}`,
           id: timer.id * 10 + weekday.value,
-          sound: "./public/assets/beeping.mp3",
           schedule: {
             on: {
               weekday: weekday.value,
@@ -61,10 +60,10 @@ export class AlarmService {
             },
             allowWhileIdle: true
           },
-          // schedule: Date.now() + 2000,
-          channel: 'medicines',
+          channelId: 'medicines',
         }
       ));
+
 
       await LocalNotifications.schedule({
         notifications
