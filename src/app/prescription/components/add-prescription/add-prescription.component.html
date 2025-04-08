@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <form [formGroup]="form">
-        <ion-list *ngIf="currentStep === 1">
+    <form [formGroup]="prescriptionForm" *ngIf="currentStep === 1">
+        <ion-list>
             <ion-item>
                 <ion-label position="floating">Nome do Doutor:</ion-label>
                 <ion-input
@@ -72,10 +72,12 @@
                 </ion-textarea>
             </ion-item>
         </ion-list>
-        <div></div>
-        <ion-list 
-          *ngIf="currentStep === 2"
-        >
+
+        <ion-button *ngIf="currentStep === 1" expand="block" (click)="nexStep()">Adicionar Medicamentos</ion-button>
+    </form>
+    <div *ngIf="currentStep === 2">
+      <form [formGroup]="medicationForm">
+        <ion-list>
           <ion-item class="medication-modal-item">
             <ion-select
               formControlName="medicationId"
@@ -88,29 +90,39 @@
             <ion-col size="9">
               <ion-item>
                 <ion-label position="floating">Dosagem:</ion-label>
-                <ion-input type="numeric"></ion-input>
+                <ion-input 
+                  type="numeric"
+                  formControlName="dosage"
+                ></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="3">              
               <ion-item class="und-item">
-                <ion-select
-                  formControlName="medicationId"
-                  placeholder="Dosagem"
-                >
-                  <ion-select-option *ngFor="let med of dosageUnit" [value]="med">{{ med }}</ion-select-option>
-                </ion-select>
+                mg
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-item>
-            <ion-label position="floating">Dosagem:</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-label position="floating">Informações:</ion-label>
+            <ion-input 
+              type="text"
+              formControlName="description" 
+            ></ion-input>
           </ion-item>
         </ion-list>
-
-        <ion-button *ngIf="currentStep === 1" expand="block" (click)="nexStep()">Adicionar Medicamentos</ion-button>
-        <ion-button *ngIf="currentStep === 2" (click)="addMedication()">Adicionar</ion-button>
-    </form>
+      </form>
+      <ion-button *ngIf="currentStep === 2" (click)="addMedication()">Adicionar</ion-button>
+      <ion-list>
+        <ion-item *ngFor="let medication of medications.controls; let i = index">
+          <ion-row>
+            <ion-col>{{(i+1) + ' - '}}</ion-col>
+            <ion-col>{{getMedicationName(medication.get('medicationId')?.value)}}</ion-col>
+            <ion-col>{{medication.get('dosage')?.value}}</ion-col>
+            <ion-col>mg</ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+    </div>
 </ion-content>
 <ion-footer>
   <ion-button *ngIf="currentStep === 2" expand="block" >Cadastrar Receita</ion-button>

@@ -29,15 +29,6 @@ export class AppComponent implements OnInit {
     await LocalNotifications.checkPermissions();
     await LocalNotifications.requestPermissions();
 
-<<<<<<< HEAD
-    this._supabaseClient.auth.onAuthStateChange(async (event, session) => {
-      if(event === 'INITIAL_SESSION' && session !== null) {
-        console.log('User signed in');
-        const profiles = await this._profileService.getProfiles(session.user.id);
-        localStorage.setItem('logged', 'true');
-        if(profiles.length > 0) {
-            //await this._router.navigate(['/tabs/medications']);
-=======
     this._authService.authStateChanged.subscribe(async (authState) => {
       switch (authState?.event) {
         case 'INITIAL_SESSION':
@@ -57,7 +48,6 @@ export class AppComponent implements OnInit {
         }
         case 'SIGN_OUT': {
           await this._router.navigate(['/auth']);
->>>>>>> c7a5e31fba09c2af7b17a9ab3afb61f89ff951ac
           return;
         }
       }

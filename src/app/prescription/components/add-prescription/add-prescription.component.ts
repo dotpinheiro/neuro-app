@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { IonInput, ModalController } from '@ionic/angular';
 import { Medication } from 'src/app/services/profile/medication/medication.interface';
 import { MedicationService } from 'src/app/services/profile/medication/medication.service';
 import { PrescriptionService } from 'src/app/services/profile/prescription/prescription.service';
+import { PrescriptionMedItem } from 'src/app/services/profile/prescription/prescriptionsMedItem.interface';
 
 @Component({
   selector: 'app-add-prescription',
@@ -11,74 +12,82 @@ import { PrescriptionService } from 'src/app/services/profile/prescription/presc
   styleUrls: ['./add-prescription.component.scss'],
 })
 export class AddPrescriptionComponent{
-  form: FormGroup;
+  prescriptionForm: FormGroup;
+  medicationForm: FormGroup;
   currentStep = 1;
-  // medicationsList: Medication[] = []
+  medicationsList: Medication[] = []
   dosageUnit = ['mg', 'mcg', 'UI', 'g', 'mL', '%']
-
-  medicationsList: Medication[] = [
-    {
-      id: 1,
-      profile_id: 1,
-      medication_name: "Dipirona",
-      medication_quantity: 10,
-      medication_manufacturer: "EMC",
-      medication_description: "Dores e febre",
-      medication_img: "asdasda"
-  },
-  {
-    id: 2,
-    profile_id: 1,
-    medication_name: "Paracetamol",
-    medication_quantity: 10,
-    medication_manufacturer: "EMC",
-    medication_description: "Dores e febre",
-    medication_img: "asdasda"
-  }]
-
   constructor(
     private modalController: ModalController,
     private fb: FormBuilder,
     private prescriptionService: PrescriptionService,
     private medicationService: MedicationService
   ) { 
-    this.form = fb.group({
+    this.prescriptionForm = fb.group({
       issue_date: [new Date().toISOString(), Validators.required],
       expiration_date: [new Date().toISOString(), Validators.required],
       doctor_name: [null, Validators.required],
       description: [null, Validators.maxLength(500)],
-      medications: this.fb.array([this.createMedication()], Validators.required)
+      medications: this.fb.array([], Validators.required)
     })
 
-    // this.getProfileMedications().then((medicationsRetrieve: Medication[]) => {
-    //   this.medicationsList = medicationsRetrieve;
-    // }).catch((error) => {
-    //   console.error('Erro ao buscar medicações', error)
-    // });
+    this.medicationForm = fb.group({
+      medicationId: ['', Validators.required],
+      dosage: ['', Validators.required],
+      description: ['', Validators.required]
+    })
+
+    this.getProfileMedications().then((medicationsRetrieve: Medication[]) => {
+      this.medicationsList = medicationsRetrieve;
+    }).catch((error) => {
+      console.error('Erro ao buscar medicações', error)
+    });
   }
 
   getProfileMedications(): Promise<Medication[]> {
     return this.medicationService.getMedications()
   }
 
-  createMedication() {
+  createMedication(medicationId: number, dosage: number, instruction: string) {
     return this.fb.group({
-      medicationId: ['', Validators.required],
-      dosagem: ['', Validators.required],
-      instruction: ['mg']
+      medicationId: [medicationId, Validators.required],
+      dosage: [dosage, Validators.required],
+      instruction: [instruction]
     });
   }
 
   addMedication() {
-    this.medications.push(this.createMedication());
+    const medicationId = this.medicationForm.get('medicationId')?.value;
+    const dosage = this.medicationForm.get('dosage')?.value;
+    const description = this.medicationForm.get('description')?.value;
+
+    this.medications.push(this.createMedication(medicationId, dosage, description));
+
+    this.clearMedication();
+
+    console.log(this.medications.controls.values);
+  }
+
+  clearMedication() {
+    this.medicationForm.patchValue({
+      medicationId: '',
+      dosage: '',
+      description: ''
+    })
   }
 
   removeMedication(index: number) {
     this.medications.removeAt(index);
   }
 
+  getMedicationName(medId: number) {
+    const medication = this.medicationsList.find(medication => medication.id === medId);
+    const medName = medication?.medication_name
+    return medName
+  }
+
   get medications() {
-    return this.form.get('medications') as FormArray;
+    return this.prescriptionForm.get('medications') as FormArray;
   }
 
   nexStep() {
@@ -94,15 +103,27 @@ export class AddPrescriptionComponent{
     }
   }
 
-  submit() {
-    console.log(this.form.value)
-    try{
-      this.prescriptionService.addPrescription(this.form.value);
-    }catch(e){
-      console.log("Erro ao cadastrar receita" + e);
-    }finally{
+  saveBasePrescription(): Promise<number> {
+    console.log(this.prescriptionForm.value)
+ 
+    const prescriptionId = this.prescriptionService.addPrescription(this.prescriptionForm.value);
 
-    }
+    return prescriptionId;
+  }
+
+  async submit() {
+    const prescriptionId = await this.saveBasePrescription()
+
+    this.medications.controls.forEach(med => {
+      const prescMedItem: PrescriptionMedItem = {
+        id_prescription: prescriptionId,
+        id_medication: med.get('medicationId')?.value,
+        dosage: med.get('dosage')?.value,
+        information: med.get('description')?.value
+      }
+
+      this.prescriptionService.addMedicationsPrescription(prescMedItem);
+    })
   }
 
   async closeModal() {
