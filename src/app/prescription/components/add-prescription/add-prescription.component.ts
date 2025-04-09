@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonInput, ModalController } from '@ionic/angular';
 import { Medication } from 'src/app/services/profile/medication/medication.interface';
 import { MedicationService } from 'src/app/services/profile/medication/medication.service';
+import { Prescription } from 'src/app/services/profile/prescription/prescription.interface';
 import { PrescriptionService } from 'src/app/services/profile/prescription/prescription.service';
 import { PrescriptionMedItem } from 'src/app/services/profile/prescription/prescriptionsMedItem.interface';
 
@@ -105,14 +106,23 @@ export class AddPrescriptionComponent{
 
   saveBasePrescription(): Promise<number> {
     console.log(this.prescriptionForm.value)
+
+    const prescription: Prescription = {
+      issue_date: this.prescriptionForm.get('issue_date')?.value,
+      expiration_date: this.prescriptionForm.get('expiration_date')?.value,
+      doctor_name: this.prescriptionForm.get('doctor_name')?.value,
+      description: this.prescriptionForm.get('description')?.value
+    }
  
-    const prescriptionId = this.prescriptionService.addPrescription(this.prescriptionForm.value);
+    const prescriptionId = this.prescriptionService.addPrescription(prescription);
 
     return prescriptionId;
   }
 
   async submit() {
     const prescriptionId = await this.saveBasePrescription()
+
+    console.log("Base prescription criada " + prescriptionId)
 
     this.medications.controls.forEach(med => {
       const prescMedItem: PrescriptionMedItem = {

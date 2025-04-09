@@ -125,5 +125,5 @@
     </div>
 </ion-content>
 <ion-footer>
-  <ion-button *ngIf="currentStep === 2" expand="block" >Cadastrar Receita</ion-button>
+  <ion-button *ngIf="currentStep === 2" expand="block" (click)="submit()" >Cadastrar Receita</ion-button>
 </ion-footer>
