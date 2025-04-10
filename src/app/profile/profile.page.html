@@ -1,5 +1,8 @@
-<ion-content [fullscreen]="true">
-  <form [formGroup]="form" class="info-container">
+@if(isLoadingUserInfo){
+<app-profile-skeleton />
+} @else {
+<form [formGroup]="form" class="info-container">
+  <ion-content [fullscreen]="true">
     <div class="form">
       <div class="image-wrapper">
         <ion-avatar class="user-image-avatar">
@@ -88,5 +91,6 @@
         ATUALIZAR DADOS
       </ion-button>
     </div>
-  </form>
-</ion-content>
+  </ion-content>
+</form>
+}
