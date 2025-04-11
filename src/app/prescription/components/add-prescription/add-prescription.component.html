@@ -111,7 +111,7 @@
           </ion-item>
         </ion-list>
       </form>
-      <ion-button *ngIf="currentStep === 2" (click)="addMedication()">Adicionar</ion-button>
+      <ion-button expand="block" *ngIf="currentStep === 2" (click)="addMedication()">Adicionar</ion-button>
       <ion-list>
         <ion-item *ngFor="let medication of medications.controls; let i = index">
           <ion-row>

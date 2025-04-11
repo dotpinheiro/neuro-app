@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonInput, ModalController } from '@ionic/angular';
+import { error } from 'console';
 import { Medication } from 'src/app/services/profile/medication/medication.interface';
 import { MedicationService } from 'src/app/services/profile/medication/medication.service';
 import { Prescription } from 'src/app/services/profile/prescription/prescription.interface';
@@ -35,7 +36,7 @@ export class AddPrescriptionComponent{
     this.medicationForm = fb.group({
       medicationId: ['', Validators.required],
       dosage: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['']
     })
 
     this.getProfileMedications().then((medicationsRetrieve: Medication[]) => {
@@ -45,15 +46,19 @@ export class AddPrescriptionComponent{
     });
   }
 
+  get medications() {
+    return this.prescriptionForm.get('medications') as FormArray;
+  }
+
   getProfileMedications(): Promise<Medication[]> {
     return this.medicationService.getMedications()
   }
 
-  createMedication(medicationId: number, dosage: number, instruction: string) {
+  createMedication(medicationId: number, dosage: number, description: string) {
     return this.fb.group({
       medicationId: [medicationId, Validators.required],
       dosage: [dosage, Validators.required],
-      instruction: [instruction]
+      description: [description]
     });
   }
 
@@ -87,15 +92,36 @@ export class AddPrescriptionComponent{
     return medName
   }
 
-  get medications() {
-    return this.prescriptionForm.get('medications') as FormArray;
+  validBasePrescription() {
+    const invalidControls: any[] = [];
+    const form = this.prescriptionForm;
+
+    Object.keys(form.controls).forEach((controlName) => {
+      const control = form.get(controlName);
+
+      if (control?.invalid) {
+        invalidControls.push({
+          name: controlName,
+          error: control.errors
+        });
+      }
+    });
+
+    return invalidControls;
   }
 
   nexStep() {
     if (this.currentStep < 2) {
+      if (this.currentStep == 1) {
+        const invalidInputs = this.validBasePrescription()
+
+        if (invalidInputs.length != 0) {
+          
+        }
+      }
+      
       this.currentStep++;
     }
-    console.log(this.currentStep)
   }
 
   previousStep() {
