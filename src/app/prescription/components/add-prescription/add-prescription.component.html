@@ -8,74 +8,73 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <form [formGroup]="prescriptionForm" *ngIf="currentStep === 1">
-        <ion-list>
-            <ion-item>
-                <ion-label position="floating">Nome do Doutor:</ion-label>
-                <ion-input
-                    formControlName="doctor_name"
-                    type="text"
-                ></ion-input>
-            </ion-item>
-            <ion-item class="date-item">
-                <ion-label position="">Inicio da Receita:</ion-label>
-                <ion-datetime-button datetime="datetime-start"></ion-datetime-button>
+  <form [formGroup]="prescriptionForm" *ngIf="currentStep === 1">
+      <ion-list>
+          <ion-item>
+              <ion-label position="floating">Nome do Doutor:</ion-label>
+              <ion-input
+                  formControlName="doctor_name"
+                  type="text"
+              ></ion-input>
+          </ion-item>
+          <ion-item class="date-item">
+              <ion-label position="">Inicio da Receita:</ion-label>
+              <ion-datetime-button datetime="datetime-start"></ion-datetime-button>
 
-                <ion-modal [keepContentsMounted]="true">
-                  <ng-template>
-                    <ion-datetime
-                      id="datetime-start"
-                      presentation="date"
-                      formControlName="issue_date"
-                      [formatOptions]="{
-                        date: {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        }
-                      }"
-                      displayFormat="DD/MM/YYYY"
-                    ></ion-datetime>
-                  </ng-template>
-                </ion-modal>
-            </ion-item>
-            <ion-item>
-                <ion-label position="">Fim da Receita:</ion-label>
-                <ion-datetime-button datetime="datetime-end"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime
+                    id="datetime-start"
+                    presentation="date"
+                    formControlName="issue_date"
+                    [formatOptions]="{
+                      date: {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                      }
+                    }"
+                    displayFormat="DD/MM/YYYY"
+                  ></ion-datetime>
+                </ng-template>
+              </ion-modal>
+          </ion-item>
+          <ion-item>
+              <ion-label position="">Fim da Receita:</ion-label>
+              <ion-datetime-button datetime="datetime-end"></ion-datetime-button>
 
-                <ion-modal [keepContentsMounted]="true">
-                  <ng-template>
-                    <ion-datetime
-                      id="datetime-end"
-                      presentation="date"
-                      formControlName="expiration_date"
-                      [formatOptions]="{
-                        date: {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        }
-                      }"
-                      displayFormat="DD/MM/YYYY"
-                    ></ion-datetime>
-                  </ng-template>
-                </ion-modal>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Descrição:</ion-label>
-                <ion-textarea
-                    formControlName="description"
-                    rows="4"
-                    maxlength="500"
-                    placeholder="Escreva aqui observações"
-                >
-                </ion-textarea>
-            </ion-item>
-        </ion-list>
-
-        <ion-button *ngIf="currentStep === 1" expand="block" (click)="nexStep()">Adicionar Medicamentos</ion-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime
+                    id="datetime-end"
+                    presentation="date"
+                    formControlName="expiration_date"
+                    [formatOptions]="{
+                      date: {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                      }
+                    }"
+                    displayFormat="DD/MM/YYYY"
+                  ></ion-datetime>
+                </ng-template>
+              </ion-modal>
+          </ion-item>
+          <ion-item>
+              <ion-label position="stacked">Descrição:</ion-label>
+              <ion-textarea
+                  formControlName="description"
+                  rows="4"
+                  maxlength="500"
+                  placeholder="Escreva aqui observações"
+              >
+              </ion-textarea>
+          </ion-item>
+      </ion-list>
     </form>
-    <div *ngIf="currentStep === 2">
+    <ion-button *ngIf="currentStep === 1" expand="block" (click)="nexStep()">Adicionar Medicamentos</ion-button>
+    <div *ngIf="currentStep === 2" class="addedMedConteiner">
       <form [formGroup]="medicationForm">
         <ion-list>
           <ion-item class="medication-modal-item">
@@ -91,7 +90,7 @@
               <ion-item>
                 <ion-label position="floating">Dosagem:</ion-label>
                 <ion-input 
-                  type="numeric"
+                  type="number"
                   formControlName="dosage"
                 ></ion-input>
               </ion-item>
@@ -112,7 +111,7 @@
         </ion-list>
       </form>
       <ion-button expand="block" *ngIf="currentStep === 2" (click)="addMedication()">Adicionar</ion-button>
-      <ion-list>
+      <ion-list *ngIf="medications.controls.length > 0; else emptyMedications">
         <ion-item *ngFor="let medication of medications.controls; let i = index">
           <ion-row>
             <ion-col>{{(i+1) + ' - '}}</ion-col>
@@ -122,6 +121,13 @@
           </ion-row>
         </ion-item>
       </ion-list>
+      <ng-template #emptyMedications>
+        <ion-item lines="none" class="emptyMedItem">
+          <ion-label class="ion-text-center" color="medium">
+            Não Medicamentos cadastrados na Receita
+          </ion-label>
+        </ion-item>
+      </ng-template>
     </div>
 </ion-content>
 <ion-footer>

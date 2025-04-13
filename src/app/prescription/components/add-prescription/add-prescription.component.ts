@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonInput, ModalController } from '@ionic/angular';
+import { AlertController, IonInput, ModalController } from '@ionic/angular';
 import { error } from 'console';
 import { Medication } from 'src/app/services/profile/medication/medication.interface';
 import { MedicationService } from 'src/app/services/profile/medication/medication.service';
@@ -23,14 +23,15 @@ export class AddPrescriptionComponent{
     private modalController: ModalController,
     private fb: FormBuilder,
     private prescriptionService: PrescriptionService,
-    private medicationService: MedicationService
+    private medicationService: MedicationService,
+    private alertController: AlertController
   ) { 
     this.prescriptionForm = fb.group({
       issue_date: [new Date().toISOString(), Validators.required],
       expiration_date: [new Date().toISOString(), Validators.required],
       doctor_name: [null, Validators.required],
       description: [null, Validators.maxLength(500)],
-      medications: this.fb.array([], Validators.required)
+      medications: this.fb.array([])
     })
 
     this.medicationForm = fb.group({
@@ -42,7 +43,7 @@ export class AddPrescriptionComponent{
     this.getProfileMedications().then((medicationsRetrieve: Medication[]) => {
       this.medicationsList = medicationsRetrieve;
     }).catch((error) => {
-      console.error('Erro ao buscar medicações', error)
+      this.showAlert("Ops!", "Não foi possivel recuperar seus medicamentos. Estamos trabalhando para isso, tente novamente mais tarde")
     });
   }
 
@@ -50,8 +51,18 @@ export class AddPrescriptionComponent{
     return this.prescriptionForm.get('medications') as FormArray;
   }
 
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
   getProfileMedications(): Promise<Medication[]> {
-    return this.medicationService.getMedications()
+    return this.medicationService.getMedications();
   }
 
   createMedication(medicationId: number, dosage: number, description: string) {
@@ -62,10 +73,32 @@ export class AddPrescriptionComponent{
     });
   }
 
+  validMedication() {
+    const form = this.medicationForm;
+
+    if (!(form.get('medicationId')?.valid)) return {
+      input: "Id do Medicamento",
+      message: "É necessário preencher o Medicamento para adicionar o item"
+    }
+
+    if (!(form.get('dosage')?.valid)) return {
+      input: "Id do Medicamento",
+      message: "É necessário preencher a dosagem para adicionar o item"
+    }
+
+    return null;
+  }
+
   addMedication() {
     const medicationId = this.medicationForm.get('medicationId')?.value;
     const dosage = this.medicationForm.get('dosage')?.value;
     const description = this.medicationForm.get('description')?.value;
+
+    const errorControl = this.validMedication()
+    if (errorControl) {
+      this.showAlert("Atenção!", errorControl?.message);
+      return;
+    }
 
     this.medications.push(this.createMedication(medicationId, dosage, description));
 
@@ -93,19 +126,33 @@ export class AddPrescriptionComponent{
   }
 
   validBasePrescription() {
-    const invalidControls: any[] = [];
+    var invalidControls: any = null;
     const form = this.prescriptionForm;
 
-    Object.keys(form.controls).forEach((controlName) => {
-      const control = form.get(controlName);
+    if (!(form.get('doctor_name')?.valid)) {
+      console.log("Entrou doutor")
+      invalidControls = {
+        input: "Nome do Doutor",
+        message: "É necessário preencher o nome do Doutor"
+      };
+      return invalidControls;
+    }
 
-      if (control?.invalid) {
-        invalidControls.push({
-          name: controlName,
-          error: control.errors
-        });
+    if ((form.get('issue_date')?.valid) && (form.get('expiration_date')?.valid)) {
+      const issueDate = form.get('issue_date')?.value
+      const expDate = form.get('expiration_date')?.value
+
+      if(issueDate > expDate) return(invalidControls = {
+        input: "Data de expedição e criação",
+        message: "A data de inicio da receita deve ser maior que a data de vencimento da receita"
+      })
+    } else {
+      invalidControls = {
+        input: "Data de expedição e criação",
+        message: "É necessário preencher as datas de Inicio e Expiração da Receita"
       }
-    });
+      return invalidControls;
+    }
 
     return invalidControls;
   }
@@ -113,10 +160,10 @@ export class AddPrescriptionComponent{
   nexStep() {
     if (this.currentStep < 2) {
       if (this.currentStep == 1) {
-        const invalidInputs = this.validBasePrescription()
-
-        if (invalidInputs.length != 0) {
-          
+        const invalidInputs = this.validBasePrescription() 
+        if (invalidInputs != null) {
+          this.showAlert("Atenção", invalidInputs.message)
+          return;
         }
       }
       
@@ -160,6 +207,8 @@ export class AddPrescriptionComponent{
 
       this.prescriptionService.addMedicationsPrescription(prescMedItem);
     })
+
+    this.closeModal()
   }
 
   async closeModal() {
