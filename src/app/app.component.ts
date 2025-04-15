@@ -32,6 +32,15 @@ export class AppComponent implements OnInit {
     this._authService.authStateChanged.subscribe(async (authState) => {
       switch (authState?.event) {
         case 'INITIAL_SESSION':
+          const { data: { user } } = await this._supabaseClient.auth.getUser();
+          if(user) {
+            const profiles = await this._profileService.getProfiles(user.id);
+            if(profiles.length > 0) {
+              await this._router.navigate(['/tabs/medications']);
+              return;
+            }
+          }
+          return;
         case 'SIGN_IN': {
           const { data: { user } } = await this._supabaseClient.auth.getUser();
           if(user) {
