@@ -1,13 +1,11 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>prescription</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">prescription</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content fullscreen="true">
+  <div class="title-box">
+    <div class="title-content">Minhas Receitas</div>
+  </div>
+  <div class="create-prescription-box">
+    <ion-button (click)="addPrescription()">Criar Receita</ion-button>
+  </div>
+  <!-- <div class="prescriptions-box">
+    <app-prescription-occurence class="prescription-item"></app-prescription-occurence>
+  </div> -->
 </ion-content>

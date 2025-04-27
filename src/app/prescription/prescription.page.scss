@@ -1,0 +1,38 @@
+ion-content {
+    --background: #EDF6F9;
+
+    .title-box {
+        height: 100px;
+        display: flex;
+        align-items: center;
+
+        .title-content {
+            color: black;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+    }
+
+    .create-prescription-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+
+        ion-button {
+            width: 80%;
+        }
+    }
+
+    .prescriptions-box {
+        width: 100%;
+
+        .prescription-item {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
