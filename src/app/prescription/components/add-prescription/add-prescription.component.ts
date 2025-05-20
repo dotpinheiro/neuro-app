@@ -2,12 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, IonInput, ModalController } from '@ionic/angular';
 import { error } from 'console';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { Medication } from 'src/app/services/profile/medication/medication.interface';
 import { MedicationService } from 'src/app/services/profile/medication/medication.service';
 import { Prescription } from 'src/app/services/profile/prescription/prescription.interface';
 import { PrescriptionService } from 'src/app/services/profile/prescription/prescription.service';
 import { PrescriptionMedItem } from 'src/app/services/profile/prescription/prescriptionsMedItem.interface';
 
+interface UserObj {
+  id: string;
+  aud: string;
+  role: string;
+}
 @Component({
   selector: 'app-add-prescription',
   templateUrl: './add-prescription.component.html',
@@ -20,6 +26,7 @@ export class AddPrescriptionComponent{
   medicationsList: Medication[] = []
   dosageUnit = ['mg', 'mcg', 'UI', 'g', 'mL', '%']
   constructor(
+    private localStorageService: LocalStorageService,
     private modalController: ModalController,
     private fb: FormBuilder,
     private prescriptionService: PrescriptionService,
@@ -123,6 +130,14 @@ export class AddPrescriptionComponent{
     const medication = this.medicationsList.find(medication => medication.id === medId);
     const medName = medication?.medication_name
     return medName
+  }
+
+  getPrescriptionId() {
+    const user = this.localStorageService.getItem<UserObj>("user");
+    if(user){
+      return user.id;
+    }
+    return;
   }
 
   validBasePrescription() {
