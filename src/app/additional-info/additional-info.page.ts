@@ -52,6 +52,9 @@ export class AdditionalInfoPage implements OnInit {
     try{
       this.isLoading = true;
       const userData: ProfileInterface = this.form.value as ProfileInterface;
+      if(userData.medication_started_at) {
+        userData.medication_started_at = userData.medication_started_at.split('T')[0];
+      }
       await this._profileService.createProfile(userData);
       await this._router.navigate(['/tabs/medications']);
     }catch (e: any){

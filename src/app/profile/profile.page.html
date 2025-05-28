@@ -62,20 +62,20 @@
       </div>
 
       <div class="form-input-full">
-        <ion-datetime-button
-          class="form-input"
-          datetime="datetime"
-        ></ion-datetime-button>
-
+        <ion-datetime-button class="form-input" datetime="datetime"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
             <ion-datetime
               id="datetime"
               formControlName="medication_started_at"
+              presentation="date"
+              [disabled]="isLoading"
+              aria-label="Data de início da medicação"
+              preferWheel="false"
             ></ion-datetime>
           </ng-template>
         </ion-modal>
-      </div>
+    </div>
     </div>
 
     <div class="button-container">
