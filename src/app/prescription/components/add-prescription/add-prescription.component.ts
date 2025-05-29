@@ -8,6 +8,7 @@ import { MedicationService } from 'src/app/services/profile/medication/medicatio
 import { Prescription } from 'src/app/services/profile/prescription/prescription.interface';
 import { PrescriptionService } from 'src/app/services/profile/prescription/prescription.service';
 import { PrescriptionMedItem } from 'src/app/services/profile/prescription/prescriptionsMedItem.interface';
+import { UserService } from 'src/app/services/user/user.service';
 
 interface UserObj {
   id: string;
@@ -31,7 +32,8 @@ export class AddPrescriptionComponent{
     private fb: FormBuilder,
     private prescriptionService: PrescriptionService,
     private medicationService: MedicationService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private userService: UserService
   ) { 
     this.prescriptionForm = fb.group({
       issue_date: [new Date().toISOString(), Validators.required],
@@ -192,14 +194,16 @@ export class AddPrescriptionComponent{
     }
   }
 
-  saveBasePrescription(): Promise<number> {
+  async saveBasePrescription(): Promise<number> {
     console.log(this.prescriptionForm.value)
+    const userId = await this.userService.getUserProfileId()
 
     const prescription: Prescription = {
       issue_date: this.prescriptionForm.get('issue_date')?.value,
       expiration_date: this.prescriptionForm.get('expiration_date')?.value,
       doctor_name: this.prescriptionForm.get('doctor_name')?.value,
-      description: this.prescriptionForm.get('description')?.value
+      description: this.prescriptionForm.get('description')?.value,
+      id_profile: userId
     }
  
     const prescriptionId = this.prescriptionService.addPrescription(prescription);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddPrescriptionComponent } from './components/add-prescription/add-prescription.component';
-import { LocalStorageService } from '../services/local-storage/local-storage.service';
+import { UserService } from '../services/user/user.service';
 interface UserObj {
   id: string;
   aud: string;
@@ -17,7 +17,7 @@ export class PrescriptionPage {
 
   constructor(
     private modalController: ModalController,
-    private localStorageService: LocalStorageService
+    private userService: UserService
   ) { }
 
   async addPrescription() {
@@ -27,10 +27,8 @@ export class PrescriptionPage {
     await modal.present()
   }
 
-  getPrescription() {
-    const userId = this.localStorageService.getItem<UserObj>("user");
-    if(userId){
-      userId.id;
-    }
+  async getPrescription() {
+    const currentUser = await this.userService.getCurrentUser();
+    //this.userService.getUserProfileId(currentUser.id);
   }
 }

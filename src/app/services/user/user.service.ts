@@ -13,7 +13,16 @@ export class UserService {
     if (error) {
       throw error;
     }
-    console.log(data);
     return data.user as User;
+  }
+
+  async getUserProfileId():Promise<number> {
+    const currentUser = await this.getCurrentUser();
+    const { data, error } = await this._supabase
+      .from('user_profiles')
+      .select("id")
+      .eq("user_id", currentUser.id)
+
+    return(data?.[0].id)
   }
 }

@@ -34,4 +34,8 @@ export class PrescriptionService {
             throw error;
         }
     }
+
+    getUserPrescrptions() {
+        
+    }
 }
