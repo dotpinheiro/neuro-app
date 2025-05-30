@@ -134,14 +134,6 @@ export class AddPrescriptionComponent{
     return medName
   }
 
-  getPrescriptionId() {
-    const user = this.localStorageService.getItem<UserObj>("user");
-    if(user){
-      return user.id;
-    }
-    return;
-  }
-
   validBasePrescription() {
     var invalidControls: any = null;
     const form = this.prescriptionForm;

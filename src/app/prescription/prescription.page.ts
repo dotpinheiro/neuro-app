@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddPrescriptionComponent } from './components/add-prescription/add-prescription.component';
 import { UserService } from '../services/user/user.service';
+import { PrescriptionService } from '../services/profile/prescription/prescription.service';
 interface UserObj {
   id: string;
   aud: string;
@@ -17,7 +18,7 @@ export class PrescriptionPage {
 
   constructor(
     private modalController: ModalController,
-    private userService: UserService
+    private prescriptionService: PrescriptionService
   ) { }
 
   async addPrescription() {
@@ -28,7 +29,8 @@ export class PrescriptionPage {
   }
 
   async getPrescription() {
-    const currentUser = await this.userService.getCurrentUser();
-    //this.userService.getUserProfileId(currentUser.id);
+    this.prescriptionService.getUserPrescrptions().then((data) => {
+      console.log(data)
+    })
   }
 }
