@@ -5,8 +5,7 @@
   <div class="create-prescription-box">
     <ion-button (click)="addPrescription()">Criar Receita</ion-button>
   </div>
-  <ion-button (click)="getPrescription()">TESTE</ion-button>
   <div class="prescriptions-box">
-    <app-prescription-occurence class="prescription-item"></app-prescription-occurence>
+    <app-prescription-occurence [userPrescriptions]="userPrescriptions" class="prescription-item"></app-prescription-occurence>
   </div>
 </ion-content>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddPrescriptionComponent } from './components/add-prescription/add-prescription.component';
-import { UserService } from '../services/user/user.service';
 import { PrescriptionService } from '../services/profile/prescription/prescription.service';
+import { Prescription } from '../services/profile/prescription/prescription.interface';
 interface UserObj {
   id: string;
   aud: string;
@@ -14,12 +14,17 @@ interface UserObj {
   styleUrls: ['./prescription.page.scss'],
 })
 
-export class PrescriptionPage {
+export class PrescriptionPage implements OnInit {
+  userPrescriptions: Prescription[] = [];
 
   constructor(
     private modalController: ModalController,
     private prescriptionService: PrescriptionService
   ) { }
+
+  ngOnInit(): void {
+    this.prescriptionService.getUserPrescrptions().then((data) => this.userPrescriptions = data)
+  }
 
   async addPrescription() {
     const modal = await this.modalController.create({
