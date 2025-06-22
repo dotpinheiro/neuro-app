@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Receita</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="base-prescription">
+    <div class="base-info">
+      <span style="font-weight: bold;">Doutor: </span>{{prescriptionItem.doctor_name}}
+    </div>
+    <div class="base-info">
+      <span style="font-weight: bold;">Data Emissão: </span>{{formatDate(prescriptionItem.issue_date)}}
+    </div>
+    <div class="base-info">
+      <span style="font-weight: bold;">Data Expiração: </span>{{formatDate(prescriptionItem.expiration_date)}}
+    </div>
+    <div class="base-info">
+      <span style="font-weight: bold;">Descrição: </span>{{prescriptionItem.description}}
+    </div>
+  </div>
+  <div class="med-title">Medicamentos:</div>
+  <ion-list>
+    <ion-item *ngFor="let prescMed of prescriptionProfMedi; let i = index">
+      <ion-row>
+        <ion-col >{{(i+1)}} -</ion-col>
+        <ion-col>{{prescMed.profile_medications.medication_name}}</ion-col>
+        <ion-col>{{prescMed.dosage}}</ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+</ion-content>
+

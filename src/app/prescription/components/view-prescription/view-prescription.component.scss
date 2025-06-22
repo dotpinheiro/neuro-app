@@ -1,0 +1,19 @@
+ion-content {
+    .base-prescription{
+        font-size: large;
+        .base-info{
+            margin-bottom: 1rem;
+        }
+    }
+
+    .med-title{
+        font-size: larger;
+        font-weight: bold;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    ion-col {
+        white-space: nowrap;
+    }
+}

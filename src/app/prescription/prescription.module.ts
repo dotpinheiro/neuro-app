@@ -10,6 +10,7 @@ import { PrescriptionPage } from './prescription.page';
 
 import { PrescriptionOccurenceComponent } from './components/prescription-occurence/prescription-occurence.component';
 import { AddPrescriptionComponent } from './components/add-prescription/add-prescription.component';
+import { ViewPrescriptionComponent } from './components/view-prescription/view-prescription.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { AddPrescriptionComponent } from './components/add-prescription/add-pres
     PrescriptionPageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [PrescriptionPage, PrescriptionOccurenceComponent, AddPrescriptionComponent]
+  declarations: [PrescriptionPage, PrescriptionOccurenceComponent, AddPrescriptionComponent, ViewPrescriptionComponent]
 })
 export class PrescriptionPageModule {}

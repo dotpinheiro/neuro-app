@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title>Medicamento</ion-title>
+      <ion-title>Cadastrar Receita</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="closeModal()">Fechar</ion-button>
       </ion-buttons>
@@ -114,7 +114,8 @@
       <ion-list *ngIf="medications.controls.length > 0; else emptyMedications">
         <ion-item *ngFor="let medication of medications.controls; let i = index">
           <ion-row>
-            <ion-col>{{(i+1) + ' - '}}</ion-col>
+            <ion-col>{{(i+1)}}</ion-col>
+            <ion-col><div>-</div></ion-col>
             <ion-col>{{getMedicationName(medication.get('medicationId')?.value)}}</ion-col>
             <ion-col>{{medication.get('dosage')?.value}}</ion-col>
             <ion-col>mg</ion-col>

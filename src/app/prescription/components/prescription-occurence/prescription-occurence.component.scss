@@ -2,4 +2,16 @@
     width: 100%;
     height: 100%;
     padding: 0;
+
+    ion-icon {
+        font-size: 35px;
+    }
+
+    .valid-icon {
+        color: rgb(29, 236, 29);
+    }
+
+    .invalid-icon {
+        color: red;
+    }
 }

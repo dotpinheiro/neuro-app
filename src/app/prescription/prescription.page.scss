@@ -1,5 +1,4 @@
 ion-content {
-    --background: #EDF6F9;
 
     .title-box {
         height: 100px;
@@ -7,7 +6,7 @@ ion-content {
         align-items: center;
 
         .title-content {
-            color: black;
+            color: white;
             font-weight: bold;
             font-size: 1.5rem;
             text-transform: uppercase;
@@ -20,8 +19,9 @@ ion-content {
         align-items: center;
         justify-content: center;
         margin-bottom: 20px;
-
+        
         ion-button {
+            color: white;
             width: 80%;
         }
     }

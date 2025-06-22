@@ -4,6 +4,7 @@ import { Prescription } from "./prescription.interface";
 import { PrescriptionMedItem } from "./prescriptionsMedItem.interface";
 import { UserService } from "../../user/user.service";
 import { promises } from "dns";
+import { MedPrescription } from "./medPrescription.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -63,4 +64,26 @@ export class PrescriptionService {
         }
     }
     
+    async getUserMedicationsPrescription(prescriptionId: number): Promise<MedPrescription[]> {
+        const { data, error } = await this._supabase
+            .from('base_prescription_profile_medication')
+            .select(`
+                id_prescription,
+                profile_medications(
+                    medication_name
+                ),
+                dosage,
+                information
+            `)
+            .eq('id_prescription', prescriptionId);
+        if (data) {
+            return data.map(medPrescription => ({
+                id_prescription: medPrescription.id_prescription,
+                profile_medications: medPrescription.profile_medications,
+                dosage: medPrescription.dosage,
+                information: medPrescription.information
+            }));
+        }
+        return [];
+    }
 }

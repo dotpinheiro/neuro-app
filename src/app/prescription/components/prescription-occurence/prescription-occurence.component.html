@@ -1,9 +1,10 @@
 <ion-card class="ionCard">
   <ion-card-content>
     <ion-list>
-      <ion-item *ngFor="let prescriptionItem of userPrescriptions">
+      <ion-item *ngFor="let prescriptionItem of userPrescriptions" (click)="showPrescription(prescriptionItem)">
         <ion-thumbnail slot="start">
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          <ion-icon class="valid-icon" name="checkmark-done-sharp" *ngIf="validPrescription(prescriptionItem.expiration_date); else expirateIcon"></ion-icon>
+          <ng-template #expirateIcon><ion-icon class="invalid-icon" name="close-sharp"></ion-icon></ng-template>
         </ion-thumbnail>
         <ion-grid>
           <ion-row>

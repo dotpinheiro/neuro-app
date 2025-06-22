@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, IonInput, ModalController } from '@ionic/angular';
-import { error } from 'console';
-import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Medication } from 'src/app/services/profile/medication/medication.interface';
 import { MedicationService } from 'src/app/services/profile/medication/medication.service';
 import { Prescription } from 'src/app/services/profile/prescription/prescription.interface';
@@ -27,7 +25,6 @@ export class AddPrescriptionComponent{
   medicationsList: Medication[] = []
   dosageUnit = ['mg', 'mcg', 'UI', 'g', 'mL', '%']
   constructor(
-    private localStorageService: LocalStorageService,
     private modalController: ModalController,
     private fb: FormBuilder,
     private prescriptionService: PrescriptionService,

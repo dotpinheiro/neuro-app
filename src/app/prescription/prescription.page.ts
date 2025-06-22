@@ -3,11 +3,6 @@ import { ModalController } from '@ionic/angular';
 import { AddPrescriptionComponent } from './components/add-prescription/add-prescription.component';
 import { PrescriptionService } from '../services/profile/prescription/prescription.service';
 import { Prescription } from '../services/profile/prescription/prescription.interface';
-interface UserObj {
-  id: string;
-  aud: string;
-  role: string;
-}
 @Component({
   selector: 'app-prescription',
   templateUrl: './prescription.page.html',
