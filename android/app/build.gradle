@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.neuroapp.io"
+    namespace "com.mycareassist.io"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.neuroapp.io"
+        applicationId "com.mycareassist.io"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 103

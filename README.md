@@ -1,8 +1,8 @@
-# NeuroApp
+# MyCareAssist
 
 ## Propósito do Projeto
 
-O **NeuroApp** é um aplicativo desenvolvido para auxiliar no gerenciamento de doenças neurodegenerativas. Ele oferece funcionalidades que ajudam pacientes e profissionais de saúde a monitorar e gerenciar informações relacionadas a essas condições.
+O **MyCareAssist** é um aplicativo desenvolvido para auxiliar no gerenciamento de doenças neurodegenerativas. Ele oferece funcionalidades que ajudam pacientes e profissionais de saúde a monitorar e gerenciar informações relacionadas a essas condições.
 
 ---
 
@@ -17,10 +17,10 @@ O **NeuroApp** é um aplicativo desenvolvido para auxiliar no gerenciamento de d
 ### ▶️ Instruções
 ```bash
     # Clone o repositório
-    git clone https://github.com/dotpinheiro/neuro-app.git
+    git clone https://github.com/dotpinheiro/mycareassist.git
 
     # Acesse o diretório da aplicação web
-    cd neuro-app
+    cd mycareassist
 
     # Instale as dependências
     yarn install

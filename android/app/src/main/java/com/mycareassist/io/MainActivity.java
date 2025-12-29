@@ -1,4 +1,4 @@
-package com.neuroapp.io;
+package com.mycareassist.io;
 import ee.forgr.capacitor.social.login.GoogleProvider;
 import ee.forgr.capacitor.social.login.SocialLoginPlugin;
 import ee.forgr.capacitor.social.login.ModifiedMainActivityForSocialLoginPlugin;
@@ -33,3 +33,4 @@ public class MainActivity extends BridgeActivity implements ModifiedMainActivity
   @Override
   public void IHaveModifiedTheMainActivityForTheUseWithSocialLoginPlugin() {}
 }
+
